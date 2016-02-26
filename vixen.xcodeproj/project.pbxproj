@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		013466631C7A2E01008B8372 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 013466621C7A2E01008B8372 /* main.cpp */; };
+		0134666B1C7A2E1D008B8372 /* game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 013466691C7A2E1D008B8372 /* game.cpp */; };
+		0134666E1C7A2E4F008B8372 /* world.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0134666C1C7A2E4F008B8372 /* world.cpp */; };
+		013466711C7A2F1C008B8372 /* renderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0134666F1C7A2F1C008B8372 /* renderer.cpp */; };
+		013466731C7A3845008B8372 /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 013466721C7A3845008B8372 /* SDL2.framework */; };
+		013466761C7A3C78008B8372 /* player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 013466741C7A3C78008B8372 /* player.cpp */; };
+		013466791C7A3C82008B8372 /* maze.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 013466771C7A3C82008B8372 /* maze.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +31,17 @@
 /* Begin PBXFileReference section */
 		0134665F1C7A2E01008B8372 /* vixen */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = vixen; sourceTree = BUILT_PRODUCTS_DIR; };
 		013466621C7A2E01008B8372 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		013466691C7A2E1D008B8372 /* game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = game.cpp; sourceTree = "<group>"; };
+		0134666A1C7A2E1D008B8372 /* game.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = game.hpp; sourceTree = "<group>"; };
+		0134666C1C7A2E4F008B8372 /* world.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = world.cpp; sourceTree = "<group>"; };
+		0134666D1C7A2E4F008B8372 /* world.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = world.hpp; sourceTree = "<group>"; };
+		0134666F1C7A2F1C008B8372 /* renderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = renderer.cpp; sourceTree = "<group>"; };
+		013466701C7A2F1C008B8372 /* renderer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = renderer.hpp; sourceTree = "<group>"; };
+		013466721C7A3845008B8372 /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = ../../../../../Library/Frameworks/SDL2.framework; sourceTree = "<group>"; };
+		013466741C7A3C78008B8372 /* player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = player.cpp; sourceTree = "<group>"; };
+		013466751C7A3C78008B8372 /* player.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = player.hpp; sourceTree = "<group>"; };
+		013466771C7A3C82008B8372 /* maze.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = maze.cpp; sourceTree = "<group>"; };
+		013466781C7A3C82008B8372 /* maze.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = maze.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,6 +49,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				013466731C7A3845008B8372 /* SDL2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -41,6 +59,7 @@
 		013466561C7A2E00008B8372 = {
 			isa = PBXGroup;
 			children = (
+				013466721C7A3845008B8372 /* SDL2.framework */,
 				013466611C7A2E01008B8372 /* vixen */,
 				013466601C7A2E01008B8372 /* Products */,
 			);
@@ -58,6 +77,16 @@
 			isa = PBXGroup;
 			children = (
 				013466621C7A2E01008B8372 /* main.cpp */,
+				013466691C7A2E1D008B8372 /* game.cpp */,
+				0134666A1C7A2E1D008B8372 /* game.hpp */,
+				0134666C1C7A2E4F008B8372 /* world.cpp */,
+				0134666D1C7A2E4F008B8372 /* world.hpp */,
+				0134666F1C7A2F1C008B8372 /* renderer.cpp */,
+				013466701C7A2F1C008B8372 /* renderer.hpp */,
+				013466741C7A3C78008B8372 /* player.cpp */,
+				013466751C7A3C78008B8372 /* player.hpp */,
+				013466771C7A3C82008B8372 /* maze.cpp */,
+				013466781C7A3C82008B8372 /* maze.hpp */,
 			);
 			path = vixen;
 			sourceTree = "<group>";
@@ -118,7 +147,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				013466711C7A2F1C008B8372 /* renderer.cpp in Sources */,
+				013466761C7A3C78008B8372 /* player.cpp in Sources */,
+				013466791C7A3C82008B8372 /* maze.cpp in Sources */,
 				013466631C7A2E01008B8372 /* main.cpp in Sources */,
+				0134666E1C7A2E4F008B8372 /* world.cpp in Sources */,
+				0134666B1C7A2E1D008B8372 /* game.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -207,6 +241,11 @@
 		013466671C7A2E01008B8372 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(LOCAL_LIBRARY_DIR)/Frameworks",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -214,6 +253,11 @@
 		013466681C7A2E01008B8372 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(LOCAL_LIBRARY_DIR)/Frameworks",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -237,6 +281,7 @@
 				013466681C7A2E01008B8372 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

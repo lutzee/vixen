@@ -35,3 +35,4 @@ Coord PixelsToCoords(int x, int y){
     coord.y = y/50;
     return coord;
 }
+

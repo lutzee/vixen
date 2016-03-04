@@ -16,9 +16,9 @@
 class Game {
 private:
     World world;
-    SDL_Window *sdl2_window;
 public:
-    Game(SDL_Window *sdl2_window);
+    SDL_Renderer *renderer;
+    Game(SDL_Renderer *renderer);
     int Run();
 
 };

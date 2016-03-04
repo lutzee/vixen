@@ -9,13 +9,14 @@
 #include "world.hpp"
 
 World::World(){
-    Player player = *new Player();
-    player.init();
-    playerList.push_back(player);
+
 }
 
-int World::init(SDL_Window *sdl2_window){
-    this->sdl2_window = sdl2_window;
+int World::init(SDL_Renderer *renderer){
+    this->renderer = renderer;
+    Player player = *new Player();
+    player.init(renderer);
+    playerList.push_back(player);
     // Generate Maze
     
     return 0;
@@ -27,9 +28,9 @@ void World::loop(){
         p.update();
         
         // Render Player
-        // Check win condition
+        p.render(renderer);
         
+        // Check win condition
     }
-    
 }
 

@@ -8,12 +8,12 @@
 
 #include "game.hpp"
 
-Game::Game(SDL_Window *sdl2_window){
-    this->sdl2_window = sdl2_window;
+Game::Game(SDL_Renderer *renderer){
+    this->renderer = renderer;
 }
 
 int Game::Run(){
-    world.init(this->sdl2_window);
+    world.init(renderer);
     
     SDL_Event e;
     bool quit = false;

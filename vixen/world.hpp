@@ -11,19 +11,19 @@
 
 #include <stdio.h>
 #include <SDL2/SDL.h>
-#include <list>
+#include <vector>
 
 #include "renderer.hpp"
 #include "player.hpp"
 
 class World {
 private:
-    SDL_Window *sdl2_window;
-    Renderer renderer;
-    std::list<Player> playerList;
+    
+    std::vector<Player> playerList;
 public:
+    SDL_Renderer *renderer;
     World();
-    int init(SDL_Window *sdl2_window);
+    int init(SDL_Renderer *renderer);
     void loop();
 
 };

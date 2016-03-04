@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		011964031C8460A600DCFC2E /* coord.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 011964021C8460A600DCFC2E /* coord.cpp */; };
+		011964051C84612700DCFC2E /* utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 011964041C84612700DCFC2E /* utils.cpp */; };
 		013466631C7A2E01008B8372 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 013466621C7A2E01008B8372 /* main.cpp */; };
 		0134666B1C7A2E1D008B8372 /* game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 013466691C7A2E1D008B8372 /* game.cpp */; };
 		0134666E1C7A2E4F008B8372 /* world.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0134666C1C7A2E4F008B8372 /* world.cpp */; };
@@ -29,6 +31,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		011964001C845E4100DCFC2E /* coord.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = coord.hpp; sourceTree = "<group>"; };
+		011964021C8460A600DCFC2E /* coord.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = coord.cpp; sourceTree = "<group>"; };
+		011964041C84612700DCFC2E /* utils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = utils.cpp; sourceTree = "<group>"; };
 		0134665F1C7A2E01008B8372 /* vixen */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = vixen; sourceTree = BUILT_PRODUCTS_DIR; };
 		013466621C7A2E01008B8372 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		013466691C7A2E1D008B8372 /* game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = game.cpp; sourceTree = "<group>"; };
@@ -87,6 +92,9 @@
 				013466751C7A3C78008B8372 /* player.hpp */,
 				013466771C7A3C82008B8372 /* maze.cpp */,
 				013466781C7A3C82008B8372 /* maze.hpp */,
+				011964021C8460A600DCFC2E /* coord.cpp */,
+				011964001C845E4100DCFC2E /* coord.hpp */,
+				011964041C84612700DCFC2E /* utils.cpp */,
 			);
 			path = vixen;
 			sourceTree = "<group>";
@@ -148,7 +156,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				013466711C7A2F1C008B8372 /* renderer.cpp in Sources */,
+				011964031C8460A600DCFC2E /* coord.cpp in Sources */,
 				013466761C7A3C78008B8372 /* player.cpp in Sources */,
+				011964051C84612700DCFC2E /* utils.cpp in Sources */,
 				013466791C7A3C82008B8372 /* maze.cpp in Sources */,
 				013466631C7A2E01008B8372 /* main.cpp in Sources */,
 				0134666E1C7A2E4F008B8372 /* world.cpp in Sources */,

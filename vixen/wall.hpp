@@ -25,7 +25,6 @@ public:
     SDL_Renderer *renderer;
     Wall();
     int init(SDL_Renderer *renderer);
-    void update();
     void render(SDL_Renderer *r);
 };
 

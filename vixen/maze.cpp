@@ -28,6 +28,7 @@ int Maze::Y(int i) {
     return floor(i / (width + 1));
 }
 
+// Third attempt at Maze generation, this time using Prim's Algorithm, this one works
 void Maze::GenerateThree(){
     std::vector<Coord> frontier;
     
@@ -123,7 +124,8 @@ void Maze::GenerateThree(){
     }
 }
 
-
+// Second attempt at generating mazes, this was an attempt to replicate the maze
+// generation from the minecraft tool worldedit, this failed misserably
 void Maze::GenerateTwo(){
 	std::random_device rd;
 	std::mt19937 mt(rd());
@@ -222,6 +224,8 @@ void Maze::GenerateTwo(){
 		}
 	}
 }
+
+// First attempt at maze generation using random stepping, lots of samey areas generated in the maze
 
 void Maze::GenerateOne(){
 	printf("maze generating\n");

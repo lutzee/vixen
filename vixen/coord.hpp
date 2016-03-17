@@ -12,16 +12,11 @@
 #include <cmath>
 #include <assert.h>
 
-struct Coord
+class Coord
 {
-    Coord() {}
-    Coord( double x, double y )
-    : x(x)
-    , y(y)
-    {}
-    double x = 0.0;
-    double y = 0.0;
-    double w = 0.0;
+public:
+    Coord * parent;
+    
     
     const double operator[](const int idx) const
     {
@@ -31,6 +26,28 @@ struct Coord
         
         assert(0);
     }
+    
+    static int compareTo(int coord1, int coord2);
+    
+
+    double x = 0.0;
+    double y = 0.0;
+    double w = 0.0;
+    
+    Coord() {}
+    Coord( double x, double y )
+    : x(x)
+    , y(y)
+    {}
+    
+    Coord( double x, double y, Coord * parent )
+    : x(x)
+    , y(y)
+    , parent(parent)
+    {}
+    
+    
+    static Coord * Opposite(Coord coord);
 };
 
 

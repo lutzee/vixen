@@ -14,7 +14,6 @@ int main(int argc, const char * argv[]) {
     // SDL Init
     SDL_Window* sdl2_window = 0;
     SDL_GLContext opengl3_context;
-    
     SDL_Init(SDL_INIT_VIDEO);
     
     // set the opengl context version
@@ -29,7 +28,7 @@ int main(int argc, const char * argv[]) {
     
     // create the sdl2 window
     sdl2_window = SDL_CreateWindow("Vixen", SDL_WINDOWPOS_CENTERED,
-                                   SDL_WINDOWPOS_CENTERED, 1280, 720,
+                                   SDL_WINDOWPOS_CENTERED, 820, 820,
                                    SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
     
     // create the opengl3 context

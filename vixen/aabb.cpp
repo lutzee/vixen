@@ -12,10 +12,7 @@ struct AABB
 {
     AABB() : c(), r() {}
     
-    AABB(const Coord & center, const Coord & halfwidths)
-    : c(center)
-    , r(halfwidths)
-    {}
+    AABB(const Coord & center, const Coord & halfwidths) : c(center), r(halfwidths){}
     
     Coord c;        // center point
     Coord r;        // halfwidths

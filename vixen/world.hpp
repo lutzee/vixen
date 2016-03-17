@@ -15,10 +15,11 @@
 
 #include "renderer.hpp"
 #include "player.hpp"
+#include "maze.hpp"
 
 class World {
 private:
-    
+    Maze *maze = new Maze(40,40);
     std::vector<Player> playerList;
 public:
     SDL_Renderer *renderer;

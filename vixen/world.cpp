@@ -19,16 +19,21 @@ int World::init(SDL_Renderer *renderer){
     playerList.push_back(player);
     // Generate Maze
     
+    maze->GenerateThree();
+    printf("maze generated\n");
+    maze->PrintOut();
+    maze->render(renderer);
     return 0;
 }
 
 void World::loop(){
+    maze->render(renderer);
     for ( Player &p : playerList ){
         // Update player
         p.update();
         
         // Render Player
-        p.render(renderer);
+        //p.render(renderer);
         
         // Check win condition
     }

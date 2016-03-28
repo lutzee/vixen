@@ -225,7 +225,7 @@ void Maze::GenerateTwo(){
 	}
 }
 
-// First attempt at maze generation using random stepping, lots of samey areas generated in the maze
+// First attempt at maze generation using recursive backstepping, lots of samey areas generated in the maze
 
 void Maze::GenerateOne(){
 	printf("maze generating\n");
@@ -298,11 +298,11 @@ void Maze::PrintOut(){
 	for(int i = 0 ; i < maze_vector.size() ; ++i){
 		std::cout << "[";
 		for(int j = 0 ; j < maze_vector[i].size() ; ++j){
-			if(maze_vector[i][j] == 0)
+			if(maze_vector[j][i] == 0)
 				std::cout << "  ";
-            else if (maze_vector[i][j] == 2)
+            else if (maze_vector[j][i] == 2)
                 std::cout << "SS";
-            else if (maze_vector[i][j] == 3)
+            else if (maze_vector[j][i] == 3)
                 std::cout << "EE";
 			else
 				std::cout << "██";

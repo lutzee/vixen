@@ -48,6 +48,7 @@ public:
     
     
     static Coord * Opposite(Coord coord);
+    bool equals(Coord coord);
 };
 
 

@@ -17,6 +17,8 @@
 		013466731C7A3845008B8372 /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 013466721C7A3845008B8372 /* SDL2.framework */; };
 		013466761C7A3C78008B8372 /* player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 013466741C7A3C78008B8372 /* player.cpp */; };
 		013466791C7A3C82008B8372 /* maze.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 013466771C7A3C82008B8372 /* maze.cpp */; };
+		014479071CA99D40009F7B39 /* dijkstra.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 014479051CA99D40009F7B39 /* dijkstra.cpp */; };
+		019223EC1C9C49D800930F23 /* astar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 019223EA1C9C49D800930F23 /* astar.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -49,6 +51,10 @@
 		013466751C7A3C78008B8372 /* player.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = player.hpp; sourceTree = "<group>"; };
 		013466771C7A3C82008B8372 /* maze.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = maze.cpp; sourceTree = "<group>"; };
 		013466781C7A3C82008B8372 /* maze.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = maze.hpp; sourceTree = "<group>"; };
+		014479051CA99D40009F7B39 /* dijkstra.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dijkstra.cpp; sourceTree = "<group>"; };
+		014479061CA99D40009F7B39 /* dijkstra.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = dijkstra.hpp; sourceTree = "<group>"; };
+		019223EA1C9C49D800930F23 /* astar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = astar.cpp; sourceTree = "<group>"; };
+		019223EB1C9C49D800930F23 /* astar.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = astar.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +104,10 @@
 				011964001C845E4100DCFC2E /* coord.hpp */,
 				011964041C84612700DCFC2E /* utils.cpp */,
 				011964061C89D02200DCFC2E /* aabb.cpp */,
+				019223EA1C9C49D800930F23 /* astar.cpp */,
+				019223EB1C9C49D800930F23 /* astar.hpp */,
+				014479051CA99D40009F7B39 /* dijkstra.cpp */,
+				014479061CA99D40009F7B39 /* dijkstra.hpp */,
 			);
 			path = vixen;
 			sourceTree = "<group>";
@@ -159,9 +169,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				013466711C7A2F1C008B8372 /* renderer.cpp in Sources */,
+				019223EC1C9C49D800930F23 /* astar.cpp in Sources */,
 				011964031C8460A600DCFC2E /* coord.cpp in Sources */,
 				011964071C89D02200DCFC2E /* aabb.cpp in Sources */,
 				013466761C7A3C78008B8372 /* player.cpp in Sources */,
+				014479071CA99D40009F7B39 /* dijkstra.cpp in Sources */,
 				011964051C84612700DCFC2E /* utils.cpp in Sources */,
 				013466791C7A3C82008B8372 /* maze.cpp in Sources */,
 				013466631C7A2E01008B8372 /* main.cpp in Sources */,
@@ -256,6 +268,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
+				EXCLUDED_SOURCE_FILE_NAMES = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(LOCAL_LIBRARY_DIR)/Frameworks",
@@ -268,6 +281,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
+				EXCLUDED_SOURCE_FILE_NAMES = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(LOCAL_LIBRARY_DIR)/Frameworks",

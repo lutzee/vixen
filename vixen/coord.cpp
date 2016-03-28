@@ -30,4 +30,14 @@ int Coord::compareTo(int coord1, int coord2){
     return 0;
 }
 
+bool Coord::equals(Coord coord){
+    if(x == coord.x){
+        if(y == coord.y){
+            return true;
+        }
+        return false;
+    }
+    return false;
+}
+
 

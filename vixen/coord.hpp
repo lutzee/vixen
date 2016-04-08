@@ -52,12 +52,20 @@ public:
     static Coord * Opposite(Coord coord);
     bool equals(Coord coord);
     
-    bool operator==(const Coord &other) const
-    {
-        return (x == other.x && y == other.y);
-    }
+    //bool operator==(const Coord &other) const
+    //{
+    //    return (x == other.x && y == other.y);
+    //}
+    
+    friend bool operator==(const Coord &c1, const Coord &c2);
 
 };
+
+bool operator== ( const Coord &c1, const Coord &c2)
+{
+    return (c1.x == c2.x && c1.y == c2.y);
+    
+}
 
 namespace std
 {
@@ -72,7 +80,7 @@ namespace std
         }
     };
     
-    
+
 }
 
 

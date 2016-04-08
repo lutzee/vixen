@@ -11,6 +11,8 @@
 
 #include <cmath>
 #include <assert.h>
+#include <string>
+#include <sstream>
 
 class Coord
 {
@@ -49,7 +51,27 @@ public:
     
     static Coord * Opposite(Coord coord);
     bool equals(Coord coord);
+    
+    bool operator==(const Coord &other) const
+    {
+        return (x == other.x && y == other.y);
+    }
+
 };
+
+namespace std
+{
+    template<> struct hash<Coord> {
+        typedef Coord argument_type;
+        typedef std::size_t result_type;
+        result_type operator() (argument_type const& coord) const {
+            result_type const h1 ( std::hash<double>()(coord.x) );
+            result_type const h2 ( std::hash<double>()(coord.y) );
+            
+            return h1 ^ (h2 << 1);
+        }
+    };
+}
 
 
 #endif /* coord_hpp */

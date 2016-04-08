@@ -21,13 +21,13 @@ double Astar::calculateDistance(Coord start, Coord end){
     //return start.dst(end);
 }
 
-Coord Astar::get_lowest_f_score(){
-    Coord currentNode;
-    Coord finalNode;
+Coord* Astar::get_lowest_f_score(){
+    Coord * currentNode;
+    Coord * finalNode = nullptr;
     double lowestFScore = 0x0FFFFFFF; // lowest needs to be set to a very high value so it can take the next lower value
     for(int i = 0 ; i < openSet.size() ; ++i){
-        currentNode = openSet.at(i);
-        auto currentFscore = f_score.find(currentNode);
+        currentNode = &openSet.at(i);
+        auto currentFscore = f_score.find(*currentNode);
         if((*currentFscore).second < lowestFScore){ // if current < lowest save to lowest, not the other way arround
             lowestFScore = (*currentFscore).second;
             finalNode = currentNode;
@@ -51,33 +51,39 @@ std::vector<Coord> reconstruct_path(std::unordered_map<Coord, Coord> came_from, 
 
 std::vector<Coord> Astar::CreatePath(Coord start, Coord end){
     openSet.push_back(start);
-    Coord current;
+    Coord * current;
     double tentative_g_score;
     std::vector<Coord> neighbours;
     g_score.insert(std::make_pair(start, 0.0));
     f_score.insert(std::make_pair(start, (*g_score.find(start)).second + calculateDistance(start, end)));
     
     
-    while(!openSet.empty()){
+    while(!openSet.empty())
+    {
         current = get_lowest_f_score();
-        if(current.equals(end)){
+        if(current->equals(end))
+        {
             return reconstruct_path(came_from, end);
         }
-        openSet.erase(find(openSet.begin(), openSet.end(),current));
-        closedSet.push_back(current);
+        openSet.erase(find(openSet.begin(), openSet.end(),*current));
+        closedSet.push_back(*current);
         
-        neighbours = GetNeighbours(current);
+        neighbours = GetNeighbours(*current);
         
-        for(int i = 0 ; i < neighbours.size() ; ++i){
-            if(find(closedSet.begin(), closedSet.end(),neighbours.at(i)) != closedSet.end()){
+        for(int i = 0 ; i < neighbours.size() ; ++i)
+        {
+            if(find(closedSet.begin(), closedSet.end(),neighbours.at(i)) != closedSet.end())
+            {
                 continue;
             }
-            tentative_g_score = (*g_score.find(current)).second + calculateDistance(current, neighbours.at(i));
-            if(find(closedSet.begin(), closedSet.end(),neighbours.at(i)) != closedSet.end() || tentative_g_score < (*g_score.find(neighbours.at(i))).second){
-                came_from.insert(std::make_pair(neighbours.at(i), current));
+            tentative_g_score = (*g_score.find(*current)).second + calculateDistance(*current, neighbours.at(i));
+            if(find(closedSet.begin(), closedSet.end(),neighbours.at(i)) != closedSet.end() || tentative_g_score < (*g_score.find(neighbours.at(i))).second)
+            {
+                came_from.insert(std::make_pair(neighbours.at(i), *current));
                 g_score.insert(std::make_pair(neighbours.at(i), tentative_g_score));
                 f_score.insert(std::make_pair(neighbours.at(i), (*g_score.find(neighbours.at(i))).second + calculateDistance(neighbours.at(i), end)));
-                if(find(openSet.begin(), openSet.end(),neighbours.at(i)) != openSet.end()){
+                if(find(openSet.begin(), openSet.end(),neighbours.at(i)) != openSet.end())
+                {
                     openSet.push_back(neighbours.at(i));
                 }
             }

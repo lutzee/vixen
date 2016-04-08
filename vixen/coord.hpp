@@ -71,6 +71,8 @@ namespace std
             return h1 ^ (h2 << 1);
         }
     };
+    
+    
 }
 
 

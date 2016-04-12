@@ -61,11 +61,8 @@ public:
 
 };
 
-bool operator== ( const Coord &c1, const Coord &c2)
-{
-    return (c1.x == c2.x && c1.y == c2.y);
-    
-}
+bool operator== ( const Coord &c1, const Coord &c2);
+
 
 namespace std
 {
@@ -79,9 +76,6 @@ namespace std
             return h1 ^ (h2 << 1);
         }
     };
-    
-
 }
-
 
 #endif /* coord_hpp */

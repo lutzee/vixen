@@ -13,6 +13,9 @@
 #include <stdio.h>
 #include <unordered_map>
 #include <cmath>
+#include <cstdlib>
+#include <stdio.h>
+#include <iostream>
 
 #include "coord.hpp"
 
@@ -24,8 +27,7 @@ private:
     std::unordered_map<Coord, Coord> came_from;
     std::unordered_map<Coord, double> g_score;
     std::unordered_map<Coord, double> f_score;
-
-    std::vector<Coord> reconstruct_path(std::unordered_map<Coord, Coord> came_from, Coord end);
+    std::vector<Coord> reconstruct_path(std::unordered_map<Coord, Coord> &came_from, Coord end);
     double calculateDistance(Coord start, Coord end);
     Coord * get_lowest_f_score();
 public:

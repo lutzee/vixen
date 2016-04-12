@@ -36,6 +36,7 @@ private:
 	int Y(int y);
     SDL_Surface *mazeSurface;
 public:
+    Coord start,end;
 	std::vector< std::vector<int> > maze_vector;
 	Maze(int width, int height);
 	void GenerateOne();

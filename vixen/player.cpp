@@ -10,8 +10,8 @@
 
 
 Player::Player(){
-    x = y = 0;
-    w = h = 50;
+    x = y = 20;
+    w = h = 20;
     coord.x = 0;
     coord.y = 0;
 }
@@ -32,13 +32,13 @@ void Player::update(){
 
 void Player::render(SDL_Renderer *r){
     SDL_Texture *player = SDL_CreateTextureFromSurface(renderer, playerSurface);
-    SDL_RenderClear(renderer); //clears the renderer
+    //SDL_RenderClear(renderer); //clears the renderer
     SDL_Rect texture_rect;
     texture_rect.x = x;
     texture_rect.y = y;
     texture_rect.w = w;
     texture_rect.h = h;
-    SDL_RenderCopy(renderer, player, NULL, &texture_rect);
+    SDL_RenderCopyEx(renderer, player, NULL, &texture_rect, 180, NULL,SDL_FLIP_NONE);
     
     SDL_RenderPresent(renderer); //updates the renderer
 }

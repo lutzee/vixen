@@ -36,7 +36,8 @@ Coord* Astar::get_lowest_f_score(){
     return finalNode;
 }
 
-std::vector<Coord> reconstruct_path(std::unordered_map<Coord, Coord> came_from, Coord end) {
+
+std::vector<Coord> Astar::reconstruct_path(std::unordered_map<Coord, Coord> &came_from, Coord end) {
     auto t = came_from.find(end);
     if(t == came_from.end()){
         std::vector<Coord> p = reconstruct_path(came_from, came_from.at(end));
@@ -61,7 +62,8 @@ std::vector<Coord> Astar::CreatePath(Coord start, Coord end){
     while(!openSet.empty())
     {
         current = get_lowest_f_score();
-        if(current->equals(end))
+        std::cout << "Current x: " << current->x << " y: " << current->y << std::endl;
+        if(current->x == end.x && current->y == end.y)
         {
             return reconstruct_path(came_from, end);
         }
@@ -77,12 +79,18 @@ std::vector<Coord> Astar::CreatePath(Coord start, Coord end){
                 continue;
             }
             tentative_g_score = (*g_score.find(*current)).second + calculateDistance(*current, neighbours.at(i));
-            if(find(closedSet.begin(), closedSet.end(),neighbours.at(i)) != closedSet.end() || tentative_g_score < (*g_score.find(neighbours.at(i))).second)
+            auto nb = neighbours.at(i);
+            std::pair<Coord, double> second;
+            if(g_score.find(nb) != g_score.end()){
+                 second = (*g_score.find(nb));
+            }
+            auto look = find(closedSet.begin(), closedSet.end(),nb) ;
+            if(look == closedSet.end() || tentative_g_score < second.second)
             {
                 came_from.insert(std::make_pair(neighbours.at(i), *current));
                 g_score.insert(std::make_pair(neighbours.at(i), tentative_g_score));
                 f_score.insert(std::make_pair(neighbours.at(i), (*g_score.find(neighbours.at(i))).second + calculateDistance(neighbours.at(i), end)));
-                if(find(openSet.begin(), openSet.end(),neighbours.at(i)) != openSet.end())
+                if(find(openSet.begin(), openSet.end(),(neighbours.at(i))) == openSet.end())
                 {
                     openSet.push_back(neighbours.at(i));
                 }

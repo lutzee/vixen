@@ -32,7 +32,7 @@ int Maze::Y(int i) {
 void Maze::GenerateThree(){
     std::vector<Coord> frontier;
     
-    Coord start = *new Coord(1,1,NULL);
+    start = *new Coord(1,1,NULL);
     maze_vector[start.x][start.y] = 2;
     for(int x = -1 ; x <= 1 ; ++x){
         for(int y = -1 ; y <= 1 ; ++y){
@@ -91,9 +91,10 @@ void Maze::GenerateThree(){
             
         }
         
-        if(frontier.empty())
+        if(frontier.empty()){
             maze_vector[last->x][last->y]=3;
-        
+            end = *new Coord(last->x, last->y);
+        }
         int maze_size = (int)maze_vector.size();
     
         for(int x = 0 ; x < maze_size ; ++x){
@@ -120,7 +121,6 @@ void Maze::GenerateThree(){
                 continue;
             maze_vector.at(maze_size-1).at(x)=1;
         }
-
     }
 }
 

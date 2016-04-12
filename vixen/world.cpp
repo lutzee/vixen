@@ -24,7 +24,7 @@ int World::init(SDL_Renderer *renderer){
     maze->PrintOut();
     maze->render(renderer);
     
-    Astar astar = *new Astar(maze->maze_vector);
+    Astar astar = *new Astar(maze->maze_vector, renderer);
     path = astar.CreatePath(maze->start, maze->end);
 
     this->pathSurface = SDL_LoadBMP("/Users/lutzee/Dropbox/Uni/vixen/vixen/images/path.bmp");

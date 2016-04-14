@@ -103,6 +103,8 @@ void Dijkstra::PrintOut(std::vector< std::vector< int > > maze_vector, std::vect
                 int distance = dist[(j*maze_vector.size())+i];
                 if(distance < 10)
                     std::cout << " " << distance;
+                else if(distance == 1048576)
+                    std::cout << "##";
                 else
                     std::cout << distance;
             }
@@ -131,14 +133,23 @@ std::vector<Coord> Dijkstra::calculatePath(Coord start, Coord end, std::vector< 
             Coord current = *new Coord((double)i, (double)j);
             std::vector<Coord> neighbours = *GetNeighbours(current, maze);
             dist.push_back(1<<20);
-            for(int i = 0 ; i < neighbours.size() ; ++i){
+            for(int k = 0 ; k < neighbours.size() ; ++k){
                 //connect current to neighbour and neighbour to current
-                unvisited[(int)((j*maze.size())+i)].push_back(std::make_pair(neighbours[i],1));
-                unvisited[(int)((neighbours[i].y*maze.size())+neighbours[i].x)].push_back(std::make_pair(current,1));
+                auto npair = std::make_pair(neighbours[k],1);
+                int uvi =(int)((j*maze.size())+i);
+                if(find(unvisited[uvi].begin(), unvisited[uvi].end(), npair) == unvisited[uvi].end()){
+                    unvisited[uvi].push_back(npair);
+                }
+                auto cpair = std::make_pair(current,1);
+                int nvi = (int)((neighbours[k].y*maze.size())+neighbours[k].x);
+                if(find(unvisited[nvi].begin(), unvisited[nvi].end(), cpair) == unvisited[nvi].end()){
+                    unvisited[nvi].push_back(cpair);
+                }
             }
         }
     }
-    
+    PrintOut(maze, dist);
+
     dist.at((int)((start.y*maze.size())+start.x)) = 0;
     
     unvisitedq.push(pii(start,0));
@@ -154,10 +165,13 @@ std::vector<Coord> Dijkstra::calculatePath(Coord start, Coord end, std::vector< 
             Coord v = unvisited[ui][i].first;
             int w = unvisited[ui][i].second;
             int vi =(int)((v.y*maze.size())+v.x);
-            std::cout << dist.at(ui)+w << " " << dist.at(vi) << std::endl;
+            //std::cout << dist.at(ui)+w << " " << dist.at(vi) << std::endl;
             if(!f[vi] && (dist.at(ui)+w < dist.at(vi))) {
                 dist.at(vi) = dist.at(ui) + w;
+                std::cout << "coord (" << u.x << "," << u.y << ")" << std::endl;
+                std::cout << "coord (" << v.x << "," << v.y << ")" << std::endl;
                 std::cout << "dist " << dist.at(ui) + w << std::endl;
+                std::cout << "w " << w << std::endl;
                 unvisitedq.push(pii(v, dist.at(vi)));
             }
         }
@@ -165,45 +179,6 @@ std::vector<Coord> Dijkstra::calculatePath(Coord start, Coord end, std::vector< 
     }
     
     PrintOut(maze, dist);
-    /*for( int i = 0 ; i < dist.size() ; ++i){
-        std::cout << dist[i] << std::endl;
-    }
-    */
-    //*dest = end;
-    //int dest_index = (int)((end.x*maze.size())+end.y);
-    
-    
-    /*dest = end;
-    //std::vector<int> dist;
-    std::vector<Coord> visited;
-    
-    
-    //dist[(start.x*maze.size())+start.y] = 0;
-    while(!unvisited.empty()){
-        int u = findSmallestDist(unvisited);
-        Coord uc = unvisited[u];
-        //int distu = dist[u];
-        
-        if(uc.equals(end)){
-            visited.push_back(uc);
-            break;
-        }
-        
-        //dist.erase(dist.begin()+u-1);
-        unvisited.erase(unvisited.begin()+u-1);
-        
-        std::vector<Coord> neighbours = GetNeighbours(uc, maze);
-        for(int v = 0 ; v < neighbours.size() ; ++v){
-            int alt = uc.w + calculateDistance(neighbours[v], uc);
-            if( alt < neighbours[v].w){
-                Coord * working = &unvisited[(neighbours[v].x*unvisited.size())+neighbours[v].y];
-                working->w = alt;
-                visited.push_back(uc);
-                std::cout << "visited: (" << uc.x << "," << uc.y << ")" << std::endl;
-            }
-        }
-    }
-    */
     
     std::vector<Coord> path;
     return getShortestPath(maze, start, end, dist);

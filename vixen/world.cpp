@@ -7,6 +7,7 @@
 //
 
 #include "world.hpp"
+#include "dijkstra.hpp"
 
 World::World(){
 
@@ -24,9 +25,10 @@ int World::init(SDL_Renderer *renderer){
     maze->PrintOut();
     maze->render(renderer);
     
-    Astar astar = *new Astar(maze->maze_vector, renderer);
-    path = astar.CreatePath(maze->start, maze->end);
-
+    //Astar astar = *new Astar(maze->maze_vector, renderer);
+    //path = astar.CreatePath(maze->start, maze->end);
+    Dijkstra dj = *new Dijkstra();
+    path = dj.calculatePath(maze->start, maze->end, maze->maze_vector);
     this->pathSurface = SDL_LoadBMP("/Users/lutzee/Dropbox/Uni/vixen/vixen/images/path.bmp");
     renderPath(renderer, path);
     

@@ -17,6 +17,7 @@
 #include "player.hpp"
 #include "maze.hpp"
 #include "astar.hpp"
+#include "dijkstra.hpp"
 
 class World {
 private:

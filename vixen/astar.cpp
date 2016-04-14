@@ -96,8 +96,8 @@ std::vector<Coord> Astar::CreatePath(Coord start, Coord end){
                 if(find(openSet.begin(), openSet.end(),neighbours.at(i)) == openSet.end())
                 {
                     auto toadd = neighbours.at(i);
-                        std::cout << "Adding (" << toadd.x << "," << toadd.y << ")" << std::endl;
-                        openSet.push_back(toadd);
+                    std::cout << "Adding (" << toadd.x << "," << toadd.y << ")" << std::endl;
+                    openSet.push_back(toadd);
                 }
             }
         }

@@ -13,11 +13,11 @@
 		013466631C7A2E01008B8372 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 013466621C7A2E01008B8372 /* main.cpp */; };
 		0134666B1C7A2E1D008B8372 /* game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 013466691C7A2E1D008B8372 /* game.cpp */; };
 		0134666E1C7A2E4F008B8372 /* world.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0134666C1C7A2E4F008B8372 /* world.cpp */; };
-		013466711C7A2F1C008B8372 /* renderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0134666F1C7A2F1C008B8372 /* renderer.cpp */; };
 		013466731C7A3845008B8372 /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 013466721C7A3845008B8372 /* SDL2.framework */; };
 		013466761C7A3C78008B8372 /* player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 013466741C7A3C78008B8372 /* player.cpp */; };
 		013466791C7A3C82008B8372 /* maze.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 013466771C7A3C82008B8372 /* maze.cpp */; };
 		014479071CA99D40009F7B39 /* dijkstra.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 014479051CA99D40009F7B39 /* dijkstra.cpp */; };
+		0144790A1CBE94A4009F7B39 /* idastar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 014479081CBE94A4009F7B39 /* idastar.cpp */; };
 		019223EC1C9C49D800930F23 /* astar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 019223EA1C9C49D800930F23 /* astar.cpp */; };
 /* End PBXBuildFile section */
 
@@ -44,8 +44,6 @@
 		0134666A1C7A2E1D008B8372 /* game.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = game.hpp; sourceTree = "<group>"; };
 		0134666C1C7A2E4F008B8372 /* world.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = world.cpp; sourceTree = "<group>"; };
 		0134666D1C7A2E4F008B8372 /* world.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = world.hpp; sourceTree = "<group>"; };
-		0134666F1C7A2F1C008B8372 /* renderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = renderer.cpp; sourceTree = "<group>"; };
-		013466701C7A2F1C008B8372 /* renderer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = renderer.hpp; sourceTree = "<group>"; };
 		013466721C7A3845008B8372 /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = ../../../../../Library/Frameworks/SDL2.framework; sourceTree = "<group>"; };
 		013466741C7A3C78008B8372 /* player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = player.cpp; sourceTree = "<group>"; };
 		013466751C7A3C78008B8372 /* player.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = player.hpp; sourceTree = "<group>"; };
@@ -53,6 +51,8 @@
 		013466781C7A3C82008B8372 /* maze.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = maze.hpp; sourceTree = "<group>"; };
 		014479051CA99D40009F7B39 /* dijkstra.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dijkstra.cpp; sourceTree = "<group>"; };
 		014479061CA99D40009F7B39 /* dijkstra.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = dijkstra.hpp; sourceTree = "<group>"; };
+		014479081CBE94A4009F7B39 /* idastar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = idastar.cpp; sourceTree = "<group>"; };
+		014479091CBE94A4009F7B39 /* idastar.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = idastar.hpp; sourceTree = "<group>"; };
 		019223EA1C9C49D800930F23 /* astar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = astar.cpp; sourceTree = "<group>"; };
 		019223EB1C9C49D800930F23 /* astar.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = astar.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -94,8 +94,6 @@
 				0134666A1C7A2E1D008B8372 /* game.hpp */,
 				0134666C1C7A2E4F008B8372 /* world.cpp */,
 				0134666D1C7A2E4F008B8372 /* world.hpp */,
-				0134666F1C7A2F1C008B8372 /* renderer.cpp */,
-				013466701C7A2F1C008B8372 /* renderer.hpp */,
 				013466741C7A3C78008B8372 /* player.cpp */,
 				013466751C7A3C78008B8372 /* player.hpp */,
 				013466771C7A3C82008B8372 /* maze.cpp */,
@@ -108,6 +106,8 @@
 				019223EB1C9C49D800930F23 /* astar.hpp */,
 				014479051CA99D40009F7B39 /* dijkstra.cpp */,
 				014479061CA99D40009F7B39 /* dijkstra.hpp */,
+				014479081CBE94A4009F7B39 /* idastar.cpp */,
+				014479091CBE94A4009F7B39 /* idastar.hpp */,
 			);
 			path = vixen;
 			sourceTree = "<group>";
@@ -168,10 +168,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				013466711C7A2F1C008B8372 /* renderer.cpp in Sources */,
 				019223EC1C9C49D800930F23 /* astar.cpp in Sources */,
 				011964031C8460A600DCFC2E /* coord.cpp in Sources */,
 				011964071C89D02200DCFC2E /* aabb.cpp in Sources */,
+				0144790A1CBE94A4009F7B39 /* idastar.cpp in Sources */,
 				013466761C7A3C78008B8372 /* player.cpp in Sources */,
 				014479071CA99D40009F7B39 /* dijkstra.cpp in Sources */,
 				011964051C84612700DCFC2E /* utils.cpp in Sources */,

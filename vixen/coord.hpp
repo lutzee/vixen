@@ -48,7 +48,6 @@ public:
     , parent(parent)
     {}
     
-    
     static Coord * Opposite(Coord coord);
     bool equals(Coord coord);
     

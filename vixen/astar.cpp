@@ -60,13 +60,13 @@ std::vector<Coord> Astar::CreatePath(Coord start, Coord end){
     g_score.insert(std::make_pair(start, 0.0));
     f_score.insert(std::make_pair(start, (*g_score.find(start)).second + calculateDistance(start, end)));
     
-    std::cout << "end x: " << end.x << " y: " << end.y << std::endl;
+    //std::cout << "end x: " << end.x << " y: " << end.y << std::endl;
 
     while(!openSet.empty())
     {
-        std::cout << "openset size " << openSet.size() << std::endl;
+        //std::cout << "openset size " << openSet.size() << std::endl;
         current = get_lowest_f_score();
-        std::cout << "Current x: " << current.x << " y: " << current.y << std::endl;
+        //std::cout << "Current x: " << current.x << " y: " << current.y << std::endl;
 
         if(current.equals(end)){
             return reconstruct_path(came_from, end);
@@ -96,7 +96,7 @@ std::vector<Coord> Astar::CreatePath(Coord start, Coord end){
                 if(find(openSet.begin(), openSet.end(),neighbours.at(i)) == openSet.end())
                 {
                     auto toadd = neighbours.at(i);
-                    std::cout << "Adding (" << toadd.x << "," << toadd.y << ")" << std::endl;
+                    //std::cout << "Adding (" << toadd.x << "," << toadd.y << ")" << std::endl;
                     openSet.push_back(toadd);
                 }
             }
@@ -109,30 +109,31 @@ std::vector<Coord> Astar::GetNeighbours(Coord current) {
     std::vector<Coord> neighbours;
     Coord neighbour1 = current;
     neighbour1.x -=1;
-    if(neighbour1.x >= 0){
+    if(neighbour1.x >= 0 && worldGrid[(int) neighbour1.x][(int)neighbour1.y] != 1){
         neighbours.push_back(neighbour1);
     }
     
     Coord neighbour2 = current;
     neighbour2.x +=1;
 
-    if((neighbour2.x < worldGrid.size()) && ((worldGrid[(int) neighbour2.x][(int) neighbour2.y] == 0)||(worldGrid[(int) neighbour2.x][(int) neighbour2.y] == 3))){
+    if(neighbour2.x < worldGrid.size() && worldGrid[(int) neighbour2.x][(int) neighbour2.y] != 1){
         neighbours.push_back(neighbour2);
     }
     
     Coord neighbour3 = current;
     neighbour3.y -=1;
 
-    if(neighbour3.y >= 0 && ((worldGrid[(int) neighbour3.x][(int) neighbour3.y] == 0)||(worldGrid[(int) neighbour3.x][(int) neighbour3.y] == 3))){
+    if(neighbour3.y >= 0 && worldGrid[(int) neighbour3.x][(int) neighbour3.y] != 1){
         neighbours.push_back(neighbour3);
     }
     
     Coord neighbour4 = current;
     neighbour4.y +=1;
-    if(neighbour4.y < worldGrid[0].size() && ((worldGrid[(int) neighbour4.x][(int) neighbour4.y] == 0)||(worldGrid[(int) neighbour4.x][(int) neighbour4.y] ==3))){
+    if(neighbour4.y < worldGrid[0].size() && worldGrid[(int) neighbour4.x][(int) neighbour4.y] != 1){
         neighbours.push_back(neighbour4);
     }
     
+    /*
     Coord neighbour5 = current;
     neighbour5.x -=1;
     neighbour5.y -=1;
@@ -160,7 +161,8 @@ std::vector<Coord> Astar::GetNeighbours(Coord current) {
     if(neighbour8.x < worldGrid.size() && neighbour8.y < worldGrid[0].size() && worldGrid[(int) neighbour8.x][(int) neighbour8.y] == 0){
         neighbours.push_back(neighbour8);
     }
-    
+    */
+     
     return neighbours;
 }
 

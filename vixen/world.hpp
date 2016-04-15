@@ -18,6 +18,8 @@
 #include "maze.hpp"
 #include "astar.hpp"
 #include "dijkstra.hpp"
+#include "natural.hpp"
+#include "wallfollow.hpp"
 
 class World {
 private:

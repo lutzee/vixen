@@ -30,27 +30,27 @@ std::vector<Coord> * Dijkstra::GetNeighbours(Coord current, std::vector< std::ve
     std::vector<Coord> * neighbours = new std::vector<Coord>();
     Coord neighbour1 = current;
     neighbour1.x -=1;
-    if(neighbour1.x >= 0 && ((maze_vector[(int) neighbour1.x][(int) neighbour1.y] == 0)||(maze_vector[(int) neighbour1.x][(int) neighbour1.y] == 3))){
+    if(neighbour1.x >= 0 && ((maze_vector[(int) neighbour1.x][(int) neighbour1.y] != 1))){
         neighbours->push_back(neighbour1);
     }
     
     Coord neighbour2 = current;
     neighbour2.x +=1;
     
-    if((neighbour2.x < maze_vector.size()) && ((maze_vector[(int) neighbour2.x][(int) neighbour2.y] == 0)||(maze_vector[(int) neighbour2.x][(int) neighbour2.y] == 3))){
+    if((neighbour2.x < maze_vector.size()) && ((maze_vector[(int) neighbour2.x][(int) neighbour2.y] != 1))){
         neighbours->push_back(neighbour2);
     }
     
     Coord neighbour3 = current;
     neighbour3.y -=1;
     
-    if(neighbour3.y >= 0 && ((maze_vector[(int) neighbour3.x][(int) neighbour3.y] == 0)||(maze_vector[(int) neighbour3.x][(int) neighbour3.y] == 3))){
+    if(neighbour3.y >= 0 && ((maze_vector[(int) neighbour3.x][(int) neighbour3.y] != 1))){
         neighbours->push_back(neighbour3);
     }
     
     Coord neighbour4 = current;
     neighbour4.y +=1;
-    if(neighbour4.y < maze_vector[0].size() && ((maze_vector[(int) neighbour4.x][(int) neighbour4.y] == 0)||(maze_vector[(int) neighbour4.x][(int) neighbour4.y] ==3))){
+    if(neighbour4.y < maze_vector[0].size() && ((maze_vector[(int) neighbour4.x][(int) neighbour4.y] != 1))){
         neighbours->push_back(neighbour4);
     }
     
@@ -77,9 +77,8 @@ std::vector<Coord> Dijkstra::getShortestPath(std::vector< std::vector< int > > m
     path.push_back(end);
     while(!next.equals(start)){
         std::vector<Coord> *neighbours = GetNeighbours(next, maze);
-        
         for( int i = 0 ; i < neighbours->size() ; ++i){
-            int nui = (int)((neighbours->at(i).y*maze.size())+neighbours->at(i).x);
+            int nui = (int)((neighbours->at(i).x*maze.size())+neighbours->at(i).y);
             if(dist.at(nui) < smallest_dist){
                 smallest_dist = dist.at(nui);
                 next = neighbours->at(i);
@@ -88,7 +87,7 @@ std::vector<Coord> Dijkstra::getShortestPath(std::vector< std::vector< int > > m
         if(find(path.begin(), path.end(), next) == path.end()){
             path.push_back(next);
         }
-        //std::cout << "adding: (" << next.x << "," << next.y << ") to path" << std::endl;
+        std::cout << "adding: (" << next.x << "," << next.y << ") to path" << std::endl;
     }
     
     return path;
@@ -100,6 +99,8 @@ void Dijkstra::PrintOut(std::vector< std::vector< int > > maze_vector, std::vect
         std::cout << "[";
         for(int j = 0 ; j < maze_vector[i].size() ; ++j){
             if(maze_vector[j][i] == 0){
+                //std::cout << "██";
+                
                 int distance = dist[(j*maze_vector.size())+i];
                 if(distance < 10)
                     std::cout << " " << distance;
@@ -112,8 +113,17 @@ void Dijkstra::PrintOut(std::vector< std::vector< int > > maze_vector, std::vect
                 std::cout << "SS";
             else if (maze_vector[j][i] == 3)
                 std::cout << "EE";
-            else
+            else{
+                /*int distance = dist[(j*maze_vector.size())+i];
+                if(distance < 10)
+                    std::cout << " " << maze_vector[j][i];
+                else if(distance == 1048576)
+                    std::cout << "##";
+                else
+                    std::cout << " " << maze_vector[j][i];
+                 */
                 std::cout << "██";
+            }
         }
         std::cout << "]" << std::endl;
     }
@@ -131,10 +141,18 @@ std::vector<Coord> Dijkstra::calculatePath(Coord start, Coord end, std::vector< 
             // get valid neighbours
             // push valid edges onto unvisited
             Coord current = *new Coord((double)i, (double)j);
-            std::vector<Coord> neighbours = *GetNeighbours(current, maze);
             dist.push_back(1<<20);
+            std::cout << "(" << i << "," << j << "): " << maze[i][j] << std::endl;
+            if(maze[j][i] == 1){
+                continue;
+            }
+            std::vector<Coord> neighbours = *GetNeighbours(current, maze);
+            std::cout << "getNeighbours size " << neighbours.size() << std::endl;
             for(int k = 0 ; k < neighbours.size() ; ++k){
                 //connect current to neighbour and neighbour to current
+                if(maze[neighbours[k].y][neighbours[k].x] == 1){
+                    continue;
+                }
                 auto npair = std::make_pair(neighbours[k],1);
                 int uvi =(int)((j*maze.size())+i);
                 if(find(unvisited[uvi].begin(), unvisited[uvi].end(), npair) == unvisited[uvi].end()){

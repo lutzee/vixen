@@ -5,8 +5,6 @@
 //  Created by Jamie Flint on 15/04/2016.
 //  Copyright © 2016 Jamie Flint. All rights reserved.
 //
-//  This is the stuff of nightmares, its terrible code and doesn't currently work, to be investigated another day
-//
 
 #include "natural.hpp"
 

@@ -19,22 +19,21 @@ int World::init(SDL_Renderer *renderer){
     player.init(renderer);
     playerList.push_back(player);
     // Generate Maze
+    this->pathSurface = SDL_LoadBMP("/Users/lutzee/Dropbox/Uni/vixen/vixen/images/path.bmp");
     
     maze->GenerateThree();
     printf("maze generated\n");
     maze->PrintOut();
     maze->render(renderer);
     
-    Astar astar = *new Astar(maze->maze_vector, renderer);
-    path = astar.CreatePath(maze->start, maze->end);
-    this->pathSurface = SDL_LoadBMP("/Users/lutzee/Dropbox/Uni/vixen/vixen/images/path.bmp");
-    //renderPath(renderer, path);
+    //Astar astar = *new Astar(maze->maze_vector, renderer);
+    //path = astar.CreatePath(maze->start, maze->end);
 
     //Dijkstra dj = *new Dijkstra();
     //path = dj.calculatePath(maze->start, maze->end, maze->maze_vector);
     
-    //Natural n = *new Natural(renderer);
-    //path = n.calculatePath(maze->maze_vector, maze->start, maze->end);
+    Natural n = *new Natural(renderer);
+    path = n.calculatePath(maze->maze_vector, maze->start, maze->end);
     
     //Wallfollow wf = *new Wallfollow();
     //path = wf.calculatePath(maze->maze_vector, maze->start, maze->end);

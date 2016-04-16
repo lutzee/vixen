@@ -11,6 +11,7 @@
 
 #include <stdio.h>
 #include <vector>
+#include <stack>
 #include <SDL2/SDL.h>
 #include <iostream>
 
@@ -23,6 +24,9 @@ public:
     Natural(SDL_Renderer * renderer);
     double calculateDistance(Coord start, Coord end);
     std::vector<Coord> GetNeighbours(Coord current, std::vector< std::vector< int> > maze_vector);
+    
+    bool canMoveTowardsEnd(Coord current, std::vector<Coord> neighbours);
+    bool canMoveAwayFromEnd(Coord current, std::vector<Coord> neighbours);
     std::vector<Coord> calculatePath(std::vector< std::vector< int > > maze, Coord start, Coord end);
     void PrintOut(std::vector< double > weights, std::vector< std::vector< int > > maze, Coord current);
 };

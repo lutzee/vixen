@@ -92,8 +92,8 @@ void Maze::GenerateThree(){
         }
         
         if(frontier.empty()){
-            maze_vector[last->x][last->y]=3;
-            end = *new Coord(last->x, last->y);
+            maze_vector[39][39]=3;
+            end = *new Coord(39, 39);
         }
         int maze_size = (int)maze_vector.size();
     

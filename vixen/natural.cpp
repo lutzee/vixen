@@ -81,8 +81,33 @@ void Natural::PrintOut(std::vector<double> weights, std::vector<std::vector<int>
     }
 }
 
+bool Natural::canMoveTowardsEnd(Coord current, std::vector<Coord> neighbours){
+    for(int i = 0 ; i < neighbours.size() ; ++i){
+        if(neighbours[i].x == current.x+1 && neighbours[i].y == current.y){
+            return true;
+        }
+        if( neighbours[i].x == current.x && neighbours[i].y == current.y+1){
+            return true;
+        }
+    }
+    return false;
+}
+
+bool Natural::canMoveAwayFromEnd(Coord current, std::vector<Coord> neighbours){
+    for(int i = 0 ; i < neighbours.size() ; ++i){
+        if(neighbours[i].x == current.x-1 && neighbours[i].y == current.y){
+            return true;
+        }
+        if( neighbours[i].x == current.x && neighbours[i].y == current.y-1){
+            return true;
+        }
+    }
+    return false;
+}
+
 std::vector<Coord> Natural::calculatePath(std::vector<std::vector<int> > maze, Coord start, Coord end){
-    std::vector<Coord> path;
+    std::stack<Coord> currentpath;
+    std::vector<Coord> visited;
     std::vector<double> weights;
     
     for(int i = 0 ; i < maze.size() ; ++i){
@@ -96,72 +121,102 @@ std::vector<Coord> Natural::calculatePath(std::vector<std::vector<int> > maze, C
         }
     }
     
-    weights[(int)((start.y*maze.size())+start.x)] = calculateDistance(start, end);
-    
     Coord current = start;
     Coord previous;
-    double smallest_dist = (1<<20);
-    double previous_dist;
-    Coord next;
     bool backtrack = false;
-    
-    int steps = 0;
-
+    currentpath.push(current);
     while(!current.equals(end)){
-        std::vector<Coord> neighbours = GetNeighbours(current, maze);
         if(backtrack){
             std::cout << "backtracking" << std::endl;
-            std::cout << "current (" << current.x << "," << current.y << ")" << std::endl;
-            for(int i = 0 ; i < neighbours.size() ; ++i){
-                double next_dist = weights[(int)((neighbours[i].y*maze.size())+neighbours[i].x)];
-                double current_dist = weights[(int)((current.y*maze.size())+current.x)];
-                std::cout << "next (" << neighbours[i].x << "," << neighbours[i].y << ")" << std::endl;
-                std::cout << "next val " << weights[(int)((neighbours[i].y*maze.size())+neighbours[i].x)] << std::endl;
-                std::cout << "next dist " << next_dist << std::endl;
-                if(weights[(int)((neighbours[i].y*maze.size())+neighbours[i].x)] == 1.0){
-                    backtrack = false;
-                    next = neighbours[i];
-                    steps--;
-                    weights[(int)((next.y*maze.size())+next.x)] = steps;
-                    std::cout << "Stopping backtracking" << std::endl;
-                    break;
+            Coord prevback = current;
+            if(!currentpath.empty()){
+                current = currentpath.top();
+                if(current.equals(start)){
+                    std::cout << "start has been popped" << std::endl;
+                    PrintOut(weights, maze, current);
                 }
-                if(next_dist < current_dist){
-                    smallest_dist = next_dist;
-                    next = neighbours[i];
-                    steps--;
-                    weights[(int)((next.y*maze.size())+next.x)] = steps;
-                }
+                currentpath.pop();
             }
-        } else {
-            for(int i = 0 ; i < neighbours.size() ; ++i)
-            {
-                double next_dist = calculateDistance(neighbours[i], end);
-                if(neighbours.size() == 1 && weights[(int)((neighbours[i].y*maze.size())+neighbours[i].x)] > 1.0){
-                    backtrack = true;
-                    std::cout << "starting backtracking" << std::endl;
-                    break;
+
+            if(GetNeighbours(current, maze).size() > 2 || current.equals(start)){
+                backtrack = false;
+                maze[prevback.x][prevback.y] = 1;
+            }
+            continue;
+        }
+        std::vector<Coord> neighbours = GetNeighbours(current, maze);
+        auto toErase = find(neighbours.begin(),neighbours.end(),previous);
+        if(toErase != neighbours.end()){
+            neighbours.erase(toErase);
+        }
+        if(neighbours.size() > 1){
+            if(canMoveTowardsEnd(current, neighbours)){
+                std::vector<int> ndist;
+                for(int i = 0 ; i < neighbours.size() ; ++i){
+                    if(neighbours[i].x == current.x+1 && neighbours[i].y == current.y){
+                        ndist.push_back(calculateDistance(current, end));
+                    }
+                    if( neighbours[i].x == current.x && neighbours[i].y == current.y+1){
+                        ndist.push_back(calculateDistance(current, end));
+                    }
                 }
             
-                if(weights[(int)((neighbours[i].y*maze.size())+neighbours[i].x)] == 1.0){
-                        smallest_dist = next_dist;
-                        next = neighbours[i];
-                        steps++;
-                        weights[(int)((next.y*maze.size())+next.x)] = steps;
+                int smallestdist = (1<<20);
+                int smallestdistindex = 0;
+                for( int i = 0 ; i < ndist.size() ; ++i){
+                    if(ndist[i] < smallestdist){
+                        smallestdist = ndist[i];
+                        smallestdistindex = i;
+                    }
+                }
+            
+                previous = current;
+                visited.push_back(current);
+                currentpath.push(current);
+                std::cout << "current (" << current.x << "," << current.y << ")" << std::endl;
+                current = neighbours[smallestdistindex];
+                weights[(neighbours[smallestdistindex].y*maze.size())+neighbours[smallestdistindex].x] = 1.0;
+            } else if(canMoveAwayFromEnd(current, neighbours)){
+                for(int i = 0 ; i < neighbours.size() ; ++i){
+                    if(neighbours[i].x == current.x-1 && neighbours[i].y == current.y){
+                        previous = current;
+                        visited.push_back(current);
+                        currentpath.push(current);
+                        std::cout << "current (" << current.x << "," << current.y << ")" << std::endl;
+                        current = neighbours[i];
+                        weights[(neighbours[i].y*maze.size())+neighbours[i].x] = 1.0;
+                        break;
+                    }
+                    if( neighbours[i].x == current.x && neighbours[i].y == current.y-1){
+                        previous = current;
+                        visited.push_back(current);
+                        currentpath.push(current);
+                        std::cout << "current (" << current.x << "," << current.y << ")" << std::endl;
+                        current = neighbours[i];
+                        weights[(neighbours[i].y*maze.size())+neighbours[i].x] = 1.0;
+                        break;
+                    }
                 }
             }
+        }else if (neighbours.size() == 0){
+            backtrack = true;
+        } else if (neighbours.size() == 1) {
+            previous = current;
+            visited.push_back(current);
+            currentpath.push(current);
+            std::cout << "current (" << current.x << "," << current.y << ")" << std::endl;
+            current = neighbours[0];
+            weights[(neighbours[0].y*maze.size())+neighbours[0].x] = 1.0;
         }
-        previous_dist = smallest_dist;
-        previous = current;
-        current = next;
-        path.push_back(previous);
-        std::cout << "adding (" << previous.x << "," << previous.y << ")" << std::endl;
-        std::cout << "small :" << smallest_dist << std::endl;
-        std::cout << "prev :" << previous_dist << std::endl;
-        PrintOut(weights, maze, current);
     }
+
     
-    
+    std::vector<Coord> path;
+    while(!currentpath.empty()){
+        path.push_back(currentpath.top());
+        currentpath.pop();
+    }
+
     
     return path;
 }

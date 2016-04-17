@@ -13,7 +13,7 @@
 int main(int argc, const char * argv[]) {
     // SDL Init
     SDL_Window* sdl2_window = 0;
-    SDL_GLContext opengl3_context;
+    //SDL_GLContext opengl3_context;
     SDL_Init(SDL_INIT_VIDEO);
     
     // set the opengl context version
@@ -32,7 +32,7 @@ int main(int argc, const char * argv[]) {
                                    SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
     
     // create the opengl3 context
-    opengl3_context = SDL_GL_CreateContext(sdl2_window);
+    //opengl3_context = SDL_GL_CreateContext(sdl2_window);
     
     // We must call SDL_CreateRenderer in order for draw calls to affect this window.
     SDL_Renderer *renderer = SDL_CreateRenderer(sdl2_window, -1, SDL_RENDERER_SOFTWARE);

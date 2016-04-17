@@ -49,7 +49,7 @@ void Maze::GenerateThree(){
             frontier.push_back(*new Coord(start.x+x,start.y+y,&start));
         }
     }
-    Coord * last = nullptr;
+    //Coord * last = nullptr;
     
     while(!frontier.empty()){
         std::random_device rd;
@@ -69,7 +69,7 @@ void Maze::GenerateThree(){
                     maze_vector.at(current.x).at(current.y) = 0;
                     maze_vector.at(opposite->x).at(opposite->y) = 0;
                     
-                    last = opposite;
+                    //last = opposite;
                     
                     for(int x=-1;x<=1;x++){
                         for(int y=-1;y<=1;y++){

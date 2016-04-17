@@ -22,6 +22,7 @@ private:
     SDL_Renderer *renderer;
 public:
     Natural(SDL_Renderer * renderer);
+    ~Natural();
     double calculateDistance(Coord start, Coord end);
     std::vector<Coord> GetNeighbours(Coord current, std::vector< std::vector< int> > maze_vector);
     

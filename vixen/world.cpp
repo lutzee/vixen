@@ -15,9 +15,9 @@ World::World(){
 
 int World::init(SDL_Renderer *renderer){
     this->renderer = renderer;
-    Player player = *new Player();
-    player.init(renderer);
-    playerList.push_back(player);
+    //Player player = *new Player();
+    //player.init(renderer);
+    //playerList.push_back(player);
     // Generate Maze
     this->pathSurface = SDL_LoadBMP("/Users/lutzee/Dropbox/Uni/vixen/vixen/images/path.bmp");
     
@@ -26,19 +26,43 @@ int World::init(SDL_Renderer *renderer){
     maze->PrintOut();
     maze->render(renderer);
     
-    //Astar astar = *new Astar(maze->maze_vector, renderer);
-    //path = astar.CreatePath(maze->start, maze->end);
+    Astar astar = *new Astar(maze->maze_vector, renderer);
 
-    //Dijkstra dj = *new Dijkstra();
-    //path = dj.calculatePath(maze->start, maze->end, maze->maze_vector);
+    auto begin = std::chrono::high_resolution_clock::now();
+    path = astar.CreatePath(maze->start, maze->end);
     
-    Natural n = *new Natural(renderer);
+    auto end = std::chrono::high_resolution_clock::now();
+    std::cout << "A* took: " << std::chrono::duration_cast<std::chrono::microseconds>(end-begin).count() << "us" << std::endl;
+    
+    Dijkstra dj = *new Dijkstra();
+    begin = std::chrono::high_resolution_clock::now();
+    
+    path = dj.calculatePath(maze->start, maze->end, maze->maze_vector);
+
+    end = std::chrono::high_resolution_clock::now();
+    std::cout << "Dijkstra took: " << std::chrono::duration_cast<std::chrono::microseconds>(end-begin).count() << "us" << std::endl;
+
+    Wallfollow wf = *new Wallfollow();
+    begin = std::chrono::high_resolution_clock::now();
+    
+    path = wf.calculatePath(maze->maze_vector, maze->start, maze->end);
+    
+    end = std::chrono::high_resolution_clock::now();
+    std::cout << "Wall Follow took: " << std::chrono::duration_cast<std::chrono::microseconds>(end-begin).count() << "us" << std::endl;
+    
+    
+    Natural n = Natural(renderer);
+    begin = std::chrono::high_resolution_clock::now();
+
     path = n.calculatePath(maze->maze_vector, maze->start, maze->end);
     
-    //Wallfollow wf = *new Wallfollow();
-    //path = wf.calculatePath(maze->maze_vector, maze->start, maze->end);
+    end = std::chrono::high_resolution_clock::now();
+    std::cout << "Natural took: " << std::chrono::duration_cast<std::chrono::microseconds>(end-begin).count() << "us" << std::endl;
+    
+    
     
     renderPath(renderer, path);
+    //delete n;
     
     return 0;
 }

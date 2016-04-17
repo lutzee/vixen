@@ -106,13 +106,13 @@ bool Wallfollow::canTurnLeft(Coord current, std::vector< std::vector< int > > ma
 Coord Wallfollow::moveForwards(Coord current, edirection dir){
     switch(dir){
         case right:
-            return *new Coord(current.x+1, current.y);
+            return Coord(current.x+1, current.y);
         case down:
-            return *new Coord(current.x, current.y+1);
+            return Coord(current.x, current.y+1);
         case left:
-            return *new Coord(current.x-1, current.y);
+            return Coord(current.x-1, current.y);
         case up:
-            return *new Coord(current.x, current.y-1);
+            return Coord(current.x, current.y-1);
     }
 }
 

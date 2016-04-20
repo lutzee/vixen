@@ -21,14 +21,16 @@
 
 #include "coord.hpp"
 
-enum direction{
+enum direction
+{
 	north=0,
 	south=1,
 	east=2,
 	west=3
 };
 
-class Maze {
+class Maze
+{
 private:
 	int width, height;
 	int Id(int x, int y);

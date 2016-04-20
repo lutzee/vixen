@@ -13,7 +13,8 @@
 #include <SDL2/SDL.h>
 #include "world.hpp"
 
-class Game {
+class Game
+{
 private:
     World world;
 public:

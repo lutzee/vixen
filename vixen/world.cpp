@@ -7,59 +7,47 @@
 //
 
 #include "world.hpp"
-#include "dijkstra.hpp"
 
-World::World(){
+static int callback(void *NotUsed, int argc, char **argv, char **azColName)
+{
+    int i;
+    for(i=0; i<argc; i++)
+    {
+        printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
+    }
+    printf("\n");
+    return 0;
+}
+
+World::World()
+{
 
 }
 
-int World::init(SDL_Renderer *renderer){
+void World::close()
+{
+    sqlite3_close(db);
+}
+
+int World::init(SDL_Renderer *renderer)
+{
     this->renderer = renderer;
-    //Player player = *new Player();
-    //player.init(renderer);
-    //playerList.push_back(player);
-    // Generate Maze
+    
     this->pathSurface = SDL_LoadBMP("/Users/lutzee/Dropbox/Uni/vixen/vixen/images/path.bmp");
-    
-    maze->GenerateThree();
-    printf("maze generated\n");
-    maze->PrintOut();
-    maze->render(renderer);
-    
-    Astar astar = *new Astar(maze->maze_vector, renderer);
 
-    auto begin = std::chrono::high_resolution_clock::now();
-    path = astar.CreatePath(maze->start, maze->end);
     
-    auto end = std::chrono::high_resolution_clock::now();
-    std::cout << "A* took: " << std::chrono::duration_cast<std::chrono::microseconds>(end-begin).count() << "us" << std::endl;
+    rc = sqlite3_open("/Users/lutzee/dissertation.db", &db);
+    if(rc)
+    {
+        std::cout << "Can't open db" << std::endl;
+        sqlite3_close(db);
+        return 1;
+    }
     
-    Dijkstra dj = *new Dijkstra();
-    begin = std::chrono::high_resolution_clock::now();
-    
-    path = dj.calculatePath(maze->start, maze->end, maze->maze_vector);
-
-    end = std::chrono::high_resolution_clock::now();
-    std::cout << "Dijkstra took: " << std::chrono::duration_cast<std::chrono::microseconds>(end-begin).count() << "us" << std::endl;
-
-    Wallfollow wf = *new Wallfollow();
-    begin = std::chrono::high_resolution_clock::now();
-    
-    path = wf.calculatePath(maze->maze_vector, maze->start, maze->end);
-    
-    end = std::chrono::high_resolution_clock::now();
-    std::cout << "Wall Follow took: " << std::chrono::duration_cast<std::chrono::microseconds>(end-begin).count() << "us" << std::endl;
-    
-    
-    Natural n = Natural(renderer);
-    begin = std::chrono::high_resolution_clock::now();
-
-    path = n.calculatePath(maze->maze_vector, maze->start, maze->end);
-    
-    end = std::chrono::high_resolution_clock::now();
-    std::cout << "Natural took: " << std::chrono::duration_cast<std::chrono::microseconds>(end-begin).count() << "us" << std::endl;
-    
-    
+    rc = sqlite3_exec(db, "drop table results;", callback, 0, &zErrMsg);
+    rc = sqlite3_exec(db, "create table results (resulttype text, resulttime INT8, series integer);", callback, 0, &zErrMsg);
+    rc = sqlite3_exec(db, "drop table iterations;", callback, 0, &zErrMsg);
+    rc = sqlite3_exec(db, "create table iterations (resulttype text, iterations INT8, series integer);", callback, 0, &zErrMsg);
     
     renderPath(renderer, path);
     //delete n;
@@ -67,7 +55,83 @@ int World::init(SDL_Renderer *renderer){
     return 0;
 }
 
-void World::renderPath(SDL_Renderer *renderer, std::vector<Coord> path){
+void World::GenerateMaze(int series)
+{
+    Maze maze = Maze(40,40);
+    Astar astar = Astar(renderer);
+    Dijkstra dj = Dijkstra();
+    Wallfollow wf = Wallfollow();
+    Natural n = Natural(renderer);
+    
+    maze.GenerateThree();
+    //std::cout<<"Maze generated" << std::endl;
+    //maze.PrintOut();
+    /*
+    auto begin = std::chrono::high_resolution_clock::now();
+    path = astar.CreatePath(maze.start, maze.end, maze.maze_vector);
+        
+    auto end = std::chrono::high_resolution_clock::now();
+    
+    auto atime = std::chrono::duration_cast<std::chrono::microseconds>(end-begin).count();
+    std::cout << "A* took: " << atime << "us" << std::endl;
+
+    std::stringstream ass;
+    
+    ass << "insert into results (resulttype, resulttime,series) values ('astar', " << atime << "," << series << ");";
+    auto astr = ass.str();
+    rc = sqlite3_exec(db, astr.c_str() , callback, 0, &zErrMsg);
+    //fprintf(stderr, "SQL error: %s\n", zErrMsg);
+    begin = std::chrono::high_resolution_clock::now();
+        
+    path = dj.calculatePath(maze.start, maze.end, maze.maze_vector);
+        
+    end = std::chrono::high_resolution_clock::now();
+    auto dtime = std::chrono::duration_cast<std::chrono::microseconds>(end-begin).count();
+
+    std::cout << "Dijkstra took: " << dtime << "us" << std::endl;
+    std::stringstream dss;
+    
+    dss << "insert into results (resulttype, resulttime, series) values ('dijkstra', " << dtime << "," << series << ");";
+
+    auto dstr = dss.str();
+    rc = sqlite3_exec(db, dstr.c_str() , callback, 0, &zErrMsg);
+     */
+    auto begin = std::chrono::high_resolution_clock::now();
+        
+    path = wf.calculatePath(maze.maze_vector, maze.start, maze.end, db, series);
+        
+    auto end = std::chrono::high_resolution_clock::now();
+    auto wtime = std::chrono::duration_cast<std::chrono::microseconds>(end-begin).count();
+
+    std::cout << "Wall Follow took: " << wtime << "us" << std::endl;
+    std::stringstream wss;
+    
+    wss << "insert into results (resulttype, resulttime, series) values ('wallfolllow', " << wtime << "," << series << ");";
+    
+    auto wstr = wss.str();
+    rc = sqlite3_exec(db, wstr.c_str() , callback, 0, &zErrMsg);
+
+        
+    begin = std::chrono::high_resolution_clock::now();
+        
+    path = n.calculatePath(maze.maze_vector, maze.start, maze.end, db, series);
+        
+    end = std::chrono::high_resolution_clock::now();
+    auto ntime = std::chrono::duration_cast<std::chrono::microseconds>(end-begin).count();
+
+    std::cout << "Natural took: " << ntime << "us" << std::endl;
+    std::stringstream nss;
+    
+    nss << "insert into results (resulttype, resulttime, series) values ('natural', " << ntime << "," << series << ");";
+    
+    auto nstr = nss.str();
+    rc = sqlite3_exec(db, nstr.c_str() , callback, 0, &zErrMsg);
+    //maze.render(renderer);
+    //renderPath(renderer, path);
+}
+
+void World::renderPath(SDL_Renderer *renderer, std::vector<Coord> path)
+{
     SDL_Texture *pathTex = SDL_CreateTextureFromSurface(renderer, pathSurface);
     
     for(auto &path : path){
@@ -82,10 +146,12 @@ void World::renderPath(SDL_Renderer *renderer, std::vector<Coord> path){
     SDL_RenderPresent(renderer); //updates the renderer
 }
 
-void World::loop(){
-    maze->render(renderer);
+void World::loop()
+{
+    //maze.render(renderer);
     
-    for ( Player &p : playerList ){
+    for ( Player &p : playerList )
+    {
         // Update player
         p.update();
         

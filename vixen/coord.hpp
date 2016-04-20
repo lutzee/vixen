@@ -65,10 +65,12 @@ bool operator== ( const Coord &c1, const Coord &c2);
 
 namespace std
 {
-    template<> struct hash<Coord> {
+    template<> struct hash<Coord>
+    {
         typedef Coord argument_type;
         typedef std::size_t result_type;
-        result_type operator() (argument_type const& coord) const {
+        result_type operator() (argument_type const& coord) const
+        {
             result_type const h1 ( std::hash<double>()(coord.x) );
             result_type const h2 ( std::hash<double>()(coord.y) );
             

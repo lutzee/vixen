@@ -8,201 +8,308 @@
 
 #include "natural.hpp"
 
-Natural::Natural(SDL_Renderer * renderer){
+template<typename T>
+void fast_erase(std::vector<T>& v, size_t i)
+{
+
+}
+
+Natural::Natural(SDL_Renderer * renderer)
+{
     this->renderer = renderer;
 }
 
-Natural::~Natural(){
+Natural::~Natural()
+{
     
 }
 
-double Natural::calculateDistance(Coord start, Coord end){
+double Natural::calculateDistance(Coord start, Coord end)
+{
     return sqrt(pow(start.x-end.x,2.0) + pow(start.y-end.y,2.0));
 }
 
-std::vector<Coord> Natural::GetNeighbours(Coord current, std::vector< std::vector< int> > maze_vector) {
-    std::vector<Coord> * neighbours = new std::vector<Coord>();
+std::vector<Coord> Natural::GetNeighbours(Coord current, std::vector< std::vector< int> > maze_vector)
+{
+    std::vector<Coord> neighbours;
     Coord neighbour1 = current;
     neighbour1.x -=1;
-    if(neighbour1.x >= 0 && ((maze_vector[(int) neighbour1.x][(int) neighbour1.y] != 1))){
-        neighbours->push_back(neighbour1);
+    if(neighbour1.x >= 0 && ((maze_vector[(int) neighbour1.x][(int) neighbour1.y] != 1)))
+    {
+        neighbours.push_back(neighbour1);
     }
     
     Coord neighbour2 = current;
     neighbour2.x +=1;
     
-    if((neighbour2.x < maze_vector.size()) && ((maze_vector[(int) neighbour2.x][(int) neighbour2.y] != 1))){
-        neighbours->push_back(neighbour2);
+    if((neighbour2.x < maze_vector.size()) && ((maze_vector[(int) neighbour2.x][(int) neighbour2.y] != 1)))
+    {
+        neighbours.push_back(neighbour2);
     }
     
     Coord neighbour3 = current;
     neighbour3.y -=1;
     
-    if(neighbour3.y >= 0 && ((maze_vector[(int) neighbour3.x][(int) neighbour3.y] != 1))){
-        neighbours->push_back(neighbour3);
+    if(neighbour3.y >= 0 && ((maze_vector[(int) neighbour3.x][(int) neighbour3.y] != 1)))
+    {
+        neighbours.push_back(neighbour3);
     }
     
     Coord neighbour4 = current;
     neighbour4.y +=1;
-    if(neighbour4.y < maze_vector[0].size() && ((maze_vector[(int) neighbour4.x][(int) neighbour4.y] != 1))){
-        neighbours->push_back(neighbour4);
+    if(neighbour4.y < maze_vector[0].size() && ((maze_vector[(int) neighbour4.x][(int) neighbour4.y] != 1)))
+    {
+        neighbours.push_back(neighbour4);
     }
  
-    return *neighbours;
+    return neighbours;
 }
 
-void Natural::PrintOut(std::vector<double> weights, std::vector<std::vector<int> > maze, Coord current){
+void Natural::PrintOut(std::vector<std::vector<int> > maze, Coord current){
     for(int i = 0 ; i < maze.size() ; ++i){
-        for(int j = 0 ; j < maze[i].size() ; ++j){
-            if(current.y == i && current.x == j){
+        for(int j = 0 ; j < maze[i].size() ; ++j)
+        {
+            if(current.y == i && current.x == j)
+            {
                 std::cout << "CC";
-            }else {
-            if(maze[j][i] == 0){
-                int distance = weights[(i*maze.size())+j];
-                if(distance > 1.0)
-                    if(distance < 10.0)
-                        std::cout << " " << (int)distance;
-                    else
-                        std::cout << distance;
-                else if (distance == 1.0){
-                    std::cout << " 1";
+            }
+            else
+            {
+                if(maze[j][i] == 0)
+                {
+                    std::cout << "  ";
                 }
+                else if (maze[j][i] == 2)
+                {
+                    std::cout << "SS";
+                }
+                else if (maze[j][i] == 3)
+                    std::cout << "EE";
                 else
-                    std::cout << distance;
-            }
-            else if (maze[j][i] == 2)
-                std::cout << "SS";
-            else if (maze[j][i] == 3)
-                std::cout << "EE";
-            else{
-                std::cout << "██";
-            }
+                {
+                    std::cout << "██";
+                }
             }
         }
         std::cout << std::endl;
     }
 }
 
-bool Natural::canMoveTowardsEnd(Coord current, std::vector<Coord> neighbours){
-    for(int i = 0 ; i < neighbours.size() ; ++i){
-        if(neighbours[i].x == current.x+1 && neighbours[i].y == current.y){
+bool Natural::canMoveTowardsEnd(Coord current, std::vector<Coord> neighbours)
+{
+    for(int i = 0 ; i < neighbours.size() ; ++i)
+    {
+        if(neighbours[i].x == current.x+1 && neighbours[i].y == current.y)
+        {
             return true;
         }
-        if( neighbours[i].x == current.x && neighbours[i].y == current.y+1){
-            return true;
-        }
-    }
-    return false;
-}
-
-bool Natural::canMoveAwayFromEnd(Coord current, std::vector<Coord> neighbours){
-    for(int i = 0 ; i < neighbours.size() ; ++i){
-        if(neighbours[i].x == current.x-1 && neighbours[i].y == current.y){
-            return true;
-        }
-        if( neighbours[i].x == current.x && neighbours[i].y == current.y-1){
+        if( neighbours[i].x == current.x && neighbours[i].y == current.y+1)
+        {
             return true;
         }
     }
     return false;
 }
 
-std::vector<Coord> Natural::calculatePath(std::vector<std::vector<int> > maze, Coord start, Coord end){
-    std::stack<Coord> currentpath;
+bool Natural::canMoveAwayFromEnd(Coord current, std::vector<Coord> neighbours)
+{
+    for(int i = 0 ; i < neighbours.size() ; ++i){
+        if(neighbours[i].x == current.x-1 && neighbours[i].y == current.y)
+        {
+            return true;
+        }
+        if( neighbours[i].x == current.x && neighbours[i].y == current.y-1)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+static int callback(void *NotUsed, int argc, char **argv, char **azColName)
+{
+    int i;
+    for(i=0; i<argc; i++)
+    {
+        printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
+    }
+    printf("\n");
+    return 0;
+}
+
+
+std::vector<Coord> Natural::calculatePath(std::vector<std::vector<int> > maze, Coord start, Coord end, sqlite3 * db, int series)
+{
+    std::vector<Coord> currentpath;
     
     Coord current = start;
     Coord previous;
     bool backtrack = false;
-    currentpath.push(current);
-    while(!current.equals(end)){
-        if(backtrack){
+    bool justStoppedBacktracking = false;
+    currentpath.push_back(current);
+    int it;
+    int bit, fit = 0;
+    int n0, n1, n1a, no1 = 0;
+    while(!current.equals(end))
+    {
+        ++it;
+        if(backtrack)
+        {
+            bit++;
             Coord prevback = current;
-            if(!currentpath.empty()){
-                current = currentpath.top();
-                currentpath.pop();
+            if(!currentpath.empty())
+            {
+                current = currentpath.back();
+
+                std::vector<Coord> neighbours = GetNeighbours(current, maze);
+                std::vector<Coord>::iterator toErase = find(neighbours.begin(),neighbours.end(),prevback);
+
+                if(toErase != neighbours.end())
+                {
+                    neighbours.erase(toErase);
+                }
+                size_t nsize = neighbours.size();
+                
                 bool isStart = current.equals(start);
-                size_t nsize = GetNeighbours(current, maze).size();
-                if(isStart && (nsize== 2)){
-                    backtrack = false;
+                
+                if(!isStart)
+                {
                     maze[prevback.x][prevback.y] = 1;
-                    continue;
-                } else if(isStart && (nsize == 1)){
+                    if(nsize == 1)
+                    {
+                        currentpath.pop_back();
+                        continue;
+                    }
+                    else if(nsize > 1)
+                    {
+                        backtrack = false;
+                        justStoppedBacktracking = true;
+                        continue;
+                    }
+                }
+                else
+                {
                     backtrack = false;
-                    continue;
-                } 
-                if(nsize > 2){
-                    backtrack = false;
+                    justStoppedBacktracking = true;
                     maze[prevback.x][prevback.y] = 1;
                     continue;
                 }
-            } else {
-                currentpath.push(start);
+                
+                currentpath.push_back(start);
                 backtrack = false;
+                justStoppedBacktracking = true;
+                continue;
             }
-            continue;
         }
+        fit++;
         std::vector<Coord> neighbours = GetNeighbours(current, maze);
-        if(!current.equals(start)){
+        if(!current.equals(start))
+        {
+            if(justStoppedBacktracking){
+                auto toErase = find(neighbours.begin(),neighbours.end(),currentpath.back());
+                if(toErase != neighbours.end())
+                {
+                    neighbours.erase(toErase);
+                }
+                justStoppedBacktracking = false;
+            }
             auto toErase = find(neighbours.begin(),neighbours.end(),previous);
-            if(toErase != neighbours.end()){
+            if(toErase != neighbours.end())
+            {
                 neighbours.erase(toErase);
             }
         }
-        if(neighbours.size() > 1){
-            if(canMoveTowardsEnd(current, neighbours)){
+        if(neighbours.size() > 1)
+        {
+            no1++;
+            if(canMoveTowardsEnd(current, neighbours))
+            {
                 std::vector<int> ndist;
-                for(int i = 0 ; i < neighbours.size() ; ++i){
-                    if(neighbours[i].x == current.x+1 && neighbours[i].y == current.y){
-                        ndist.push_back(calculateDistance(current, end));
+                std::vector<Coord> nextavail;
+                for(int i = 0 ; i < neighbours.size() ; ++i)
+                {
+                    if(neighbours[i].x == current.x+1 && neighbours[i].y == current.y)
+                    {
+                        ndist.push_back(calculateDistance(neighbours[i], end));
+                        nextavail.push_back(neighbours[i]);
                     }
-                    if( neighbours[i].x == current.x && neighbours[i].y == current.y+1){
-                        ndist.push_back(calculateDistance(current, end));
+                    if( neighbours[i].x == current.x && neighbours[i].y == current.y+1)
+                    {
+                        ndist.push_back(calculateDistance(neighbours[i], end));
+                        nextavail.push_back(neighbours[i]);
                     }
                 }
             
                 int smallestdist = (1<<20);
                 int smallestdistindex = 0;
-                for( int i = 0 ; i < ndist.size() ; ++i){
-                    if(ndist[i] < smallestdist){
+                for( int i = 0 ; i < ndist.size() ; ++i)
+                {
+                    if(ndist[i] < smallestdist)
+                    {
                         smallestdist = ndist[i];
                         smallestdistindex = i;
                     }
                 }
             
                 previous = current;
-                currentpath.push(current);
-                current = neighbours[smallestdistindex];
-            } else if(canMoveAwayFromEnd(current, neighbours)){
-                for(int i = 0 ; i < neighbours.size() ; ++i){
-                    if(neighbours[i].x == current.x-1 && neighbours[i].y == current.y){
+                if(find(currentpath.begin(),currentpath.end(),current) == currentpath.end())
+                {
+                    currentpath.push_back(current);
+                }
+                current = nextavail[smallestdistindex];
+            }
+            else if(canMoveAwayFromEnd(current, neighbours))
+            {
+                for(int i = 0 ; i < neighbours.size() ; ++i)
+                {
+                    if(neighbours[i].x == current.x-1 && neighbours[i].y == current.y)
+                    {
                         previous = current;
-                        currentpath.push(current);
+                        if(find(currentpath.begin(),currentpath.end(),current) == currentpath.end())
+                        {
+                            currentpath.push_back(current);
+                        }
                         current = neighbours[i];
                         break;
                     }
-                    if( neighbours[i].x == current.x && neighbours[i].y == current.y-1){
+                    else if( neighbours[i].x == current.x && neighbours[i].y == current.y-1)
+                    {
                         previous = current;
-                        currentpath.push(current);
+                        if(find(currentpath.begin(),currentpath.end(),current) == currentpath.end())
+                        {
+                            currentpath.push_back(current);
+                        }
                         current = neighbours[i];
                         break;
                     }
                 }
             }
-        }else if (neighbours.size() == 0){
+        }
+        else if (neighbours.size() == 0)
+        {
+            n0++;
             if(!current.equals(start))
                 backtrack = true;
-        } else if (neighbours.size() == 1) {
+        }
+        else if (neighbours.size() == 1)
+        {
+            n1++;
             previous = current;
-            currentpath.push(current);
+            if(find(currentpath.begin(),currentpath.end(),current) == currentpath.end())
+            {
+                n1a++;
+                currentpath.push_back(current);
+            }
             current = neighbours[0];
         }
     }
     
-    std::vector<Coord> path;
-    while(!currentpath.empty()){
-        path.push_back(currentpath.top());
-        currentpath.pop();
-    }
+    std::stringstream nss;
     
-    return path;
+    nss << "insert into iterations (resulttype, iterations, series) values ('natural', " << it << ", " << series << ");";
+    
+    auto nstr = nss.str();
+    sqlite3_exec(db, nstr.c_str() , callback, 0, &zErrMsg);
+
+    return currentpath;
 }

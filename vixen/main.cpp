@@ -10,7 +10,8 @@
 #include <SDL2/SDL.h>
 #include "game.hpp"
 
-int main(int argc, const char * argv[]) {
+int main(int argc, const char * argv[])
+{
     // SDL Init
     SDL_Window* sdl2_window = 0;
     //SDL_GLContext opengl3_context;

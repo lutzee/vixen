@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include <SDL2/SDL.h>
 #include <vector>
+#include <sqlite3.h>
 
 #include "renderer.hpp"
 #include "player.hpp"
@@ -21,17 +22,23 @@
 #include "natural.hpp"
 #include "wallfollow.hpp"
 
-class World {
+class World
+{
 private:
-    Maze *maze = new Maze(40,40);
     std::vector<Player> playerList;
     std::vector<Coord> path;
     SDL_Surface *pathSurface;
+    
+    sqlite3 *db;
+    char *zErrMsg = 0;
+    int rc;
 public:
     SDL_Renderer *renderer;
     World();
     int init(SDL_Renderer *renderer);
+    void GenerateMaze(int sereies);
     void loop();
+    void close();
     void renderPath(SDL_Renderer *renderer, std::vector<Coord> path);
 };
 

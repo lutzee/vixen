@@ -16,7 +16,8 @@
 
 #include "coord.hpp"
 
-class Player {
+class Player
+{
 private:
     int x,y,w,h;
     Coord coord;

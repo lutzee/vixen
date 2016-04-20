@@ -8,8 +8,10 @@
 
 #include "coord.hpp"
 
- Coord * Coord::Opposite(Coord coord){
-    if(coord.parent == NULL){
+Coord * Coord::Opposite(Coord coord)
+{
+    if(coord.parent == NULL)
+    {
         return NULL;
     }
     if(compareTo(coord.x,coord.parent->x)!=0)
@@ -19,20 +21,30 @@
     return NULL;
 }
 
-int Coord::compareTo(int coord1, int coord2){
-    if(coord1 > coord2){
+
+int Coord::compareTo(int coord1, int coord2)
+{
+    if(coord1 > coord2)
+    {
         return 1;
-    }else if (coord1 < coord2){
+    }
+    else if (coord1 < coord2)
+    {
         return -1;
-    }else{
+    }
+    else
+    {
         return 0;
     }
     return 0;
 }
 
-bool Coord::equals(Coord coord){
-    if(x == coord.x){
-        if(y == coord.y){
+bool Coord::equals(Coord coord)
+{
+    if(x == coord.x)
+    {
+        if(y == coord.y)
+        {
             return true;
         }
         return false;

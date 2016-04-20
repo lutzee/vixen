@@ -20,7 +20,8 @@
 
 #include "coord.hpp"
 
-class Astar {
+class Astar
+{
 private:
     std::vector< std::vector< int > > worldGrid;
     std::vector<Coord> openSet;
@@ -34,10 +35,10 @@ private:
     SDL_Surface *tileSurface;
     SDL_Renderer *renderer;
 public:
-    Astar(std::vector< std::vector< int > > worldGrid, SDL_Renderer *renderer);
+    Astar(SDL_Renderer *renderer);
     Astar(Coord start, Coord end);
     
-    std::vector<Coord> CreatePath(Coord start, Coord end);
+    std::vector<Coord> CreatePath(Coord start, Coord end, std::vector< std::vector< int > > worldGrid);
     std::vector<Coord> GetNeighbours(Coord coord);
     void renderTile(SDL_Renderer *renderer, Coord coord);
 };

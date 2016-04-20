@@ -21,6 +21,7 @@
 		014479071CA99D40009F7B39 /* dijkstra.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 014479051CA99D40009F7B39 /* dijkstra.cpp */; };
 		0144790A1CBE94A4009F7B39 /* idastar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 014479081CBE94A4009F7B39 /* idastar.cpp */; };
 		019223EC1C9C49D800930F23 /* astar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 019223EA1C9C49D800930F23 /* astar.cpp */; };
+		01D3DBCE1CC6279A00339F63 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 01D3DBCD1CC6279A00339F63 /* libsqlite3.tbd */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -61,6 +62,7 @@
 		014479091CBE94A4009F7B39 /* idastar.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = idastar.hpp; sourceTree = "<group>"; };
 		019223EA1C9C49D800930F23 /* astar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = astar.cpp; sourceTree = "<group>"; };
 		019223EB1C9C49D800930F23 /* astar.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = astar.hpp; sourceTree = "<group>"; };
+		01D3DBCD1CC6279A00339F63 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				01D3DBCE1CC6279A00339F63 /* libsqlite3.tbd in Frameworks */,
 				013466731C7A3845008B8372 /* SDL2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -78,6 +81,7 @@
 		013466561C7A2E00008B8372 = {
 			isa = PBXGroup;
 			children = (
+				01D3DBCD1CC6279A00339F63 /* libsqlite3.tbd */,
 				013466721C7A3845008B8372 /* SDL2.framework */,
 				013466611C7A2E01008B8372 /* vixen */,
 				013466601C7A2E01008B8372 /* Products */,

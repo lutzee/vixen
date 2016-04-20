@@ -12,20 +12,28 @@
 #include <stdio.h>
 #include <vector>
 #include <iostream>
+#include <sqlite3.h>
+#include <chrono>
+#include <thread>
 
 #include "Coord.hpp"
-enum edirection {
+enum edirection
+{
     right = 1,
     down = 2,
     left = 3,
     up = 4
 };
 
-class Wallfollow {
+class Wallfollow
+{
 private:
+    sqlite3 *db;
+    char *zErrMsg = 0;
+    int rc;
 public:
     Wallfollow();
-    std::vector<Coord> calculatePath(std::vector< std::vector< int > > maze, Coord start, Coord end);
+    std::vector<Coord> calculatePath(std::vector< std::vector< int > > maze, Coord start, Coord end, sqlite3 * db, int series);
     bool canTurnRight(Coord current, std::vector< std::vector< int > > maze, edirection dir);
     bool canMoveForwards(Coord current, std::vector< std::vector< int > > maze, edirection dir);
     bool canTurnLeft(Coord current, std::vector< std::vector< int > > maze, edirection dir);

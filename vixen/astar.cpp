@@ -8,29 +8,35 @@
 
 #include "astar.hpp"
 
-Astar::Astar(std::vector< std:: vector< int > > worldGrid, SDL_Renderer *renderer){
+Astar::Astar(SDL_Renderer *renderer)
+{
     this->worldGrid = worldGrid;
     this->renderer = renderer;
     this->tileSurface= SDL_LoadBMP("/Users/lutzee/Dropbox/Uni/vixen/vixen/images/path.bmp");
 }
 
-Astar::Astar(Coord start, Coord end){
+Astar::Astar(Coord start, Coord end)
+{
     openSet.push_back(start);
 }
 
-double Astar::calculateDistance(Coord start, Coord end){
+double Astar::calculateDistance(Coord start, Coord end)
+{
     return sqrt(pow(start.x-end.x,2.0) + pow(start.y-end.y,2.0));
     //return start.dst(end);
 }
 
-Coord Astar::get_lowest_f_score(){
+Coord Astar::get_lowest_f_score()
+{
     Coord currentNode;
     Coord finalNode;
     double lowestFScore = 0x0FFFFFFF; // lowest needs to be set to a very high value so it can take the next lower value
-    for(int i = 0 ; i < openSet.size() ; ++i){
+    for(int i = 0 ; i < openSet.size() ; ++i)
+    {
         currentNode = openSet.at(i);
         auto currentFscore = f_score.find(currentNode);
-        if((*currentFscore).second < lowestFScore){ // if current < lowest save to lowest, not the other way arround
+        if((*currentFscore).second < lowestFScore)
+        { // if current < lowest save to lowest, not the other way arround
             lowestFScore = (*currentFscore).second;
             finalNode = currentNode;
         }
@@ -39,20 +45,26 @@ Coord Astar::get_lowest_f_score(){
 }
 
 
-std::vector<Coord> Astar::reconstruct_path(std::unordered_map<Coord, Coord> &came_from, Coord end) {
+std::vector<Coord> Astar::reconstruct_path(std::unordered_map<Coord, Coord> &came_from, Coord end)
+{
     auto t = came_from.find(end);
-    if(t != came_from.end()){
+    if(t != came_from.end())
+    {
         std::vector<Coord> p = reconstruct_path(came_from, came_from.at(end));
         p.push_back(end);
         return p;
-    } else {
+    }
+    else
+    {
         std::vector<Coord> p;
         p.push_back(end);
         return p;
     }
 }
 
-std::vector<Coord> Astar::CreatePath(Coord start, Coord end){
+std::vector<Coord> Astar::CreatePath(Coord start, Coord end, std::vector< std:: vector< int > > worldGrid)
+{
+    this->worldGrid = worldGrid;
     openSet.push_back(start);
     Coord current;
     double tentative_g_score;
@@ -68,7 +80,8 @@ std::vector<Coord> Astar::CreatePath(Coord start, Coord end){
         current = get_lowest_f_score();
         //std::cout << "Current x: " << current.x << " y: " << current.y << std::endl;
 
-        if(current.equals(end)){
+        if(current.equals(end))
+        {
             return reconstruct_path(came_from, end);
         }
         openSet.erase(find(openSet.begin(), openSet.end(),current));
@@ -84,10 +97,11 @@ std::vector<Coord> Astar::CreatePath(Coord start, Coord end){
             tentative_g_score = (*g_score.find(current)).second + calculateDistance(current, neighbours.at(i));
             auto nb = neighbours.at(i);
             std::pair<Coord, double> second;
-            if(g_score.find(nb) != g_score.end()){
+            if(g_score.find(nb) != g_score.end())
+            {
                  second = (*g_score.find(nb));
             }
-            auto look = find(closedSet.begin(), closedSet.end(),nb) ;
+            auto look = find(closedSet.begin(), closedSet.end(),nb);
             if(look == closedSet.end() || tentative_g_score < second.second)
             {
                 came_from.insert(std::make_pair(neighbours.at(i), current));
@@ -105,31 +119,36 @@ std::vector<Coord> Astar::CreatePath(Coord start, Coord end){
     return std::vector<Coord>();
 }
 
-std::vector<Coord> Astar::GetNeighbours(Coord current) {
+std::vector<Coord> Astar::GetNeighbours(Coord current)
+{
     std::vector<Coord> neighbours;
     Coord neighbour1 = current;
     neighbour1.x -=1;
-    if(neighbour1.x >= 0 && worldGrid[(int) neighbour1.x][(int)neighbour1.y] != 1){
+    if(neighbour1.x >= 0 && worldGrid[(int) neighbour1.x][(int)neighbour1.y] != 1)
+    {
         neighbours.push_back(neighbour1);
     }
     
     Coord neighbour2 = current;
     neighbour2.x +=1;
 
-    if(neighbour2.x < worldGrid.size() && worldGrid[(int) neighbour2.x][(int) neighbour2.y] != 1){
+    if(neighbour2.x < worldGrid.size() && worldGrid[(int) neighbour2.x][(int) neighbour2.y] != 1)
+    {
         neighbours.push_back(neighbour2);
     }
     
     Coord neighbour3 = current;
     neighbour3.y -=1;
 
-    if(neighbour3.y >= 0 && worldGrid[(int) neighbour3.x][(int) neighbour3.y] != 1){
+    if(neighbour3.y >= 0 && worldGrid[(int) neighbour3.x][(int) neighbour3.y] != 1)
+    {
         neighbours.push_back(neighbour3);
     }
     
     Coord neighbour4 = current;
     neighbour4.y +=1;
-    if(neighbour4.y < worldGrid[0].size() && worldGrid[(int) neighbour4.x][(int) neighbour4.y] != 1){
+    if(neighbour4.y < worldGrid[0].size() && worldGrid[(int) neighbour4.x][(int) neighbour4.y] != 1)
+    {
         neighbours.push_back(neighbour4);
     }
     
@@ -166,7 +185,8 @@ std::vector<Coord> Astar::GetNeighbours(Coord current) {
     return neighbours;
 }
 
-void Astar::renderTile(SDL_Renderer *renderer, Coord coord){
+void Astar::renderTile(SDL_Renderer *renderer, Coord coord)
+{
     SDL_Texture *pathTex = SDL_CreateTextureFromSurface(renderer, tileSurface);
     
         SDL_Rect texture_rect;

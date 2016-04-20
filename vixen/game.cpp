@@ -8,24 +8,35 @@
 
 #include "game.hpp"
 
-Game::Game(SDL_Renderer *renderer){
+Game::Game(SDL_Renderer *renderer)
+{
     this->renderer = renderer;
 }
 
-int Game::Run(){
+int Game::Run()
+{
     world.init(renderer);
     
     SDL_Event e;
     bool quit = false;
+    
+    for(int i = 0 ; i < 10 ; ++i)
+    {
+        world.GenerateMaze(i);
+    }
+    world.loop();
+    world.close();
     while (!quit){
         // Event polling
-        while (SDL_PollEvent(&e)){
+        while (SDL_PollEvent(&e))
+        {
             //If user closes the window
-            if (e.type == SDL_QUIT){
+            if (e.type == SDL_QUIT)
+            {
                 quit = true;
             }
         }
-        world.loop();
+        //world.loop();
     }
     
     return 0;

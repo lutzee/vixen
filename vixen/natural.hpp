@@ -14,12 +14,21 @@
 #include <stack>
 #include <SDL2/SDL.h>
 #include <iostream>
+#include <list>
+#include <sqlite3.h>
+#include <chrono>
+#include <thread>
+#include <sstream>
 
 #include "coord.hpp"
 
-class Natural {
+class Natural
+{
 private:
     SDL_Renderer *renderer;
+    sqlite3 *db;
+    char *zErrMsg = 0;
+    int rc;
 public:
     Natural(SDL_Renderer * renderer);
     ~Natural();
@@ -28,8 +37,8 @@ public:
     
     bool canMoveTowardsEnd(Coord current, std::vector<Coord> neighbours);
     bool canMoveAwayFromEnd(Coord current, std::vector<Coord> neighbours);
-    std::vector<Coord> calculatePath(std::vector< std::vector< int > > maze, Coord start, Coord end);
-    void PrintOut(std::vector< double > weights, std::vector< std::vector< int > > maze, Coord current);
+    std::vector<Coord> calculatePath(std::vector< std::vector< int > > maze, Coord start, Coord end, sqlite3 * db, int series);
+    void PrintOut( std::vector< std::vector< int > > maze, Coord current);
 };
 
 

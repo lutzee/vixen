@@ -66,14 +66,14 @@ void World::GenerateMaze(int series)
     maze.GenerateThree();
     //std::cout<<"Maze generated" << std::endl;
     //maze.PrintOut();
-    /*
+    
     auto begin = std::chrono::high_resolution_clock::now();
     path = astar.CreatePath(maze.start, maze.end, maze.maze_vector);
         
     auto end = std::chrono::high_resolution_clock::now();
     
     auto atime = std::chrono::duration_cast<std::chrono::microseconds>(end-begin).count();
-    std::cout << "A* took: " << atime << "us" << std::endl;
+    //std::cout << "A* took: " << atime << "us" << std::endl;
 
     std::stringstream ass;
     
@@ -88,22 +88,22 @@ void World::GenerateMaze(int series)
     end = std::chrono::high_resolution_clock::now();
     auto dtime = std::chrono::duration_cast<std::chrono::microseconds>(end-begin).count();
 
-    std::cout << "Dijkstra took: " << dtime << "us" << std::endl;
+    //std::cout << "Dijkstra took: " << dtime << "us" << std::endl;
     std::stringstream dss;
     
     dss << "insert into results (resulttype, resulttime, series) values ('dijkstra', " << dtime << "," << series << ");";
 
     auto dstr = dss.str();
     rc = sqlite3_exec(db, dstr.c_str() , callback, 0, &zErrMsg);
-     */
-    auto begin = std::chrono::high_resolution_clock::now();
+     
+    begin = std::chrono::high_resolution_clock::now();
         
     path = wf.calculatePath(maze.maze_vector, maze.start, maze.end, db, series);
         
-    auto end = std::chrono::high_resolution_clock::now();
+    end = std::chrono::high_resolution_clock::now();
     auto wtime = std::chrono::duration_cast<std::chrono::microseconds>(end-begin).count();
 
-    std::cout << "Wall Follow took: " << wtime << "us" << std::endl;
+    //std::cout << "Wall Follow took: " << wtime << "us" << std::endl;
     std::stringstream wss;
     
     wss << "insert into results (resulttype, resulttime, series) values ('wallfolllow', " << wtime << "," << series << ");";
@@ -119,7 +119,7 @@ void World::GenerateMaze(int series)
     end = std::chrono::high_resolution_clock::now();
     auto ntime = std::chrono::duration_cast<std::chrono::microseconds>(end-begin).count();
 
-    std::cout << "Natural took: " << ntime << "us" << std::endl;
+    //std::cout << "Natural took: " << ntime << "us" << std::endl;
     std::stringstream nss;
     
     nss << "insert into results (resulttype, resulttime, series) values ('natural', " << ntime << "," << series << ");";

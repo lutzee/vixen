@@ -60,6 +60,7 @@
 		014479061CA99D40009F7B39 /* dijkstra.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = dijkstra.hpp; sourceTree = "<group>"; };
 		014479081CBE94A4009F7B39 /* idastar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = idastar.cpp; sourceTree = "<group>"; };
 		014479091CBE94A4009F7B39 /* idastar.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = idastar.hpp; sourceTree = "<group>"; };
+		017E87F31CCA4CD70005AFCF /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		019223EA1C9C49D800930F23 /* astar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = astar.cpp; sourceTree = "<group>"; };
 		019223EB1C9C49D800930F23 /* astar.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = astar.hpp; sourceTree = "<group>"; };
 		01D3DBCD1CC6279A00339F63 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
@@ -81,6 +82,7 @@
 		013466561C7A2E00008B8372 = {
 			isa = PBXGroup;
 			children = (
+				017E87F31CCA4CD70005AFCF /* LICENSE */,
 				01D3DBCD1CC6279A00339F63 /* libsqlite3.tbd */,
 				013466721C7A3845008B8372 /* SDL2.framework */,
 				013466611C7A2E01008B8372 /* vixen */,
